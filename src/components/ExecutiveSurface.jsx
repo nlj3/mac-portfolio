@@ -13,6 +13,18 @@ import './surface.css'
 
 const STACK = ['Rust', 'WebAssembly', 'Systems', 'TypeScript', 'Cloudflare']
 
+// Every figure here is counted, not estimated.
+//   crates   — 15 kedge crates + foreguard, all live on crates.io
+//   tests    — `cargo test --workspace`: 135 in kedge, 64 in foreguard
+//   tokens   — cumulative compaction recorded in the kedge ledger
+//   reduction— crates/kedge-mcp/src/lib.rs, 9,615 → 3,973 tokens
+const STATS = [
+  { n: '16', unit: '', label: 'crates published' },
+  { n: '199', unit: '', label: 'tests passing' },
+  { n: '73,942', unit: '', label: 'tokens compacted' },
+  { n: '58.7', unit: '%', label: 'context reduction' },
+]
+
 // Real compaction, measured on the kedge codebase (kedge_compact, no LLM):
 //   crates/kedge-mcp/src/lib.rs — 9,615 → 3,973 tokens, 38 bodies elided.
 const DIFF = {
@@ -99,25 +111,53 @@ export default function ExecutiveSurface() {
       </header>
 
       <main className="xs-main">
-        {/* ── hero ── */}
+        {/* ── hero ──
+            Two columns on purpose: a name is the least interesting thing here, so
+            the work sits beside it rather than a screen below it. The panel is
+            real captured output, not a mockup. */}
         <section className="xs-hero">
-          <div className="xs-eyebrow"><span className="xs-avail" />Available for Staff &amp; Principal roles</div>
-          <h1 className="xs-h1">
-            Noel Jackson <span className="xs-h1-iii">III</span>
-            <span className="xs-h1-sub">Systems &amp; AI Infrastructure Engineer</span>
-          </h1>
-          <p className="xs-lead">
-            Building <b>deterministic Rust runtimes</b>, WASM execution engines, and low-level AI
-            infrastructure, from the kernel to the edge.
-          </p>
-          <div className="xs-pills">
-            {STACK.map((s) => <span className="xs-pill" key={s}>{s}</span>)}
+          <div className="xs-hero-grid">
+            <div className="xs-hero-copy">
+              <div className="xs-eyebrow"><span className="xs-avail" />Available for Staff &amp; Principal roles</div>
+              <h1 className="xs-h1">
+                Noel Jackson <span className="xs-h1-iii">III</span>
+                <span className="xs-h1-sub">Systems &amp; AI Infrastructure Engineer</span>
+              </h1>
+              <p className="xs-lead">
+                Building <b>deterministic Rust runtimes</b>, WASM execution engines, and low-level AI
+                infrastructure, from the kernel to the edge.
+              </p>
+              <div className="xs-pills">
+                {STACK.map((s) => <span className="xs-pill" key={s}>{s}</span>)}
+              </div>
+              <div className="xs-cta-row">
+                <a className="xs-btn primary" href="mailto:noel@nlj.dev">Contact: noel@nlj.dev</a>
+                <button className="xs-btn" onClick={resume} disabled={busy}>
+                  {busy ? 'Building…' : 'Download Résumé (PDF)'}
+                </button>
+              </div>
+            </div>
+
+            <aside className="xs-proof" aria-label="Real output from Foreguard blocking a prompt injection">
+              <div className="xs-proof-bar">
+                <span className="xs-dot r" /><span className="xs-dot y" /><span className="xs-dot g" />
+                <span className="xs-proof-title">{FOREGUARD.cmd}</span>
+              </div>
+              <pre className="xs-proof-body"><code>{FOREGUARD.transcript}</code></pre>
+              <div className="xs-proof-foot">
+                A fetched page told the agent to mail everything to an attacker.
+                It was caught the moment that address reached a mutating tool.
+              </div>
+            </aside>
           </div>
-          <div className="xs-cta-row">
-            <a className="xs-btn primary" href="mailto:noel@nlj.dev">Contact: noel@nlj.dev</a>
-            <button className="xs-btn" onClick={resume} disabled={busy}>
-              {busy ? 'Building…' : 'Download Résumé (PDF)'}
-            </button>
+
+          <div className="xs-statstrip">
+            {STATS.map((s) => (
+              <div className="xs-stat" key={s.label}>
+                <div className="xs-stat-n">{s.n}<span className="xs-stat-u">{s.unit}</span></div>
+                <div className="xs-stat-l">{s.label}</div>
+              </div>
+            ))}
           </div>
         </section>
 

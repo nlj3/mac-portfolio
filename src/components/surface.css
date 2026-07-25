@@ -41,7 +41,7 @@
 /* Same max-width and horizontal padding as .xs-main so the nav sits on the
    page's content column rather than the full viewport. */
 .xs-nav-inner {
-  max-width: 980px; margin: 0 auto;
+  max-width: 1140px; margin: 0 auto;
   display: flex; align-items: center; justify-content: space-between;
   padding: 18px clamp(20px, 6vw, 44px);
 }
@@ -57,10 +57,74 @@
 }
 .xs-kbd-hint:hover { color: var(--fg); border-color: var(--fg); }
 
-.xs-main { position: relative; z-index: 1; max-width: 980px; margin: 0 auto; padding: 0 clamp(20px, 6vw, 44px) 90px; }
+.xs-main { position: relative; z-index: 1; max-width: 1140px; margin: 0 auto; padding: 0 clamp(20px, 6vw, 44px) 90px; }
 
 /* ── hero ── */
-.xs-hero { padding: clamp(64px, 15vh, 150px) 0 64px; }
+.xs-hero { padding: clamp(48px, 9vh, 104px) 0 64px; }
+
+/* Copy left, real output right. The proof panel is what makes the fold worth
+   looking at; a name alone is not. */
+.xs-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 440px);
+  gap: clamp(28px, 4vw, 56px);
+  align-items: center;
+}
+.xs-hero-copy { min-width: 0; }
+
+.xs-proof {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #08080a;
+  overflow: hidden;
+  box-shadow: 0 20px 60px -30px rgba(0, 0, 0, 0.9);
+}
+.xs-proof-bar {
+  display: flex; align-items: center; gap: 7px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
+  background: #0b0b0d;
+}
+.xs-proof-title {
+  margin-left: 6px;
+  font-family: var(--mono); font-size: 11.5px; color: var(--faint);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.xs-proof-body {
+  margin: 0; padding: 16px 16px 14px;
+  font-family: var(--mono); font-size: 11.5px; line-height: 1.72;
+  color: #b6bcc6; white-space: pre; overflow-x: auto;
+}
+.xs-proof-foot {
+  padding: 11px 16px 13px;
+  border-top: 1px solid var(--line);
+  font-size: 12.5px; line-height: 1.55; color: var(--muted);
+}
+
+/* Measured figures, directly under the fold. */
+.xs-statstrip {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1px; margin-top: clamp(40px, 6vh, 72px);
+  background: var(--line);
+  border: 1px solid var(--line); border-radius: 12px; overflow: hidden;
+}
+.xs-stat { background: var(--bg); padding: 18px 20px; }
+.xs-stat-n {
+  font-size: clamp(21px, 2.4vw, 27px); font-weight: 600;
+  letter-spacing: -0.02em; color: var(--fg); line-height: 1.1;
+}
+.xs-stat-u { font-size: 0.62em; color: var(--muted); margin-left: 1px; }
+.xs-stat-l {
+  margin-top: 5px;
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--faint);
+}
+
+@media (max-width: 940px) {
+  .xs-hero-grid { grid-template-columns: 1fr; gap: 34px; }
+  .xs-statstrip { grid-template-columns: repeat(2, 1fr); }
+}
 .xs-eyebrow {
   display: inline-flex; align-items: center; gap: 9px;
   font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
