@@ -1,0 +1,16 @@
+# Cloudflare Pages header rules. This is the Pages equivalent of the Apache
+# .htaccess kept alongside it (the site was previously on LiteSpeed shared
+# hosting). Both files can coexist; each host ignores the other's.
+
+# The leaderboard client ships new features often, so don't let browsers hold
+# a stale copy.
+/arcade-leaderboard.js
+  Cache-Control: no-cache, must-revalidate, max-age=0
+
+# Vite emits content-hashed asset filenames, so they can be cached hard.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Never let the shell go stale; it points at the hashed bundles above.
+/index.html
+  Cache-Control: no-cache, must-revalidate, max-age=0

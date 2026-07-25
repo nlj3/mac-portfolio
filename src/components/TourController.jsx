@@ -17,17 +17,17 @@ export default function TourController() {
   const STEPS = [
     {
       ms: 3200,
-      caption: "Hi — I'm Noel. Sixty seconds, and you'll have seen the real work.",
+      caption: "Hi, I'm Noel. Sixty seconds, and you'll have seen the real work.",
       act: () => { closeAll(); openApp('starthere') },
     },
     {
       ms: 4200,
-      caption: 'My flagship is Kedge — a deterministic AI-agent harness, written in Rust.',
+      caption: 'My flagship is Kedge, a deterministic AI-agent harness written in Rust.',
       act: () => openApp('kedge'),
     },
     {
       ms: 7000,
-      caption: 'Here is the real engine — Rust compiled to WebAssembly — catching a dangerous command, live.',
+      caption: 'Here is the real engine, Rust compiled to WebAssembly, catching a dangerous command, live.',
       act: () => { openApp('terminal'); runInTerminal('run rm -rf /') },
     },
     {
@@ -46,7 +46,7 @@ export default function TourController() {
       act: () => { closeAll(); openApp('scope') },
     },
     {
-      ms: null, // final — hold until the visitor chooses
+      ms: null, // final: hold until the visitor chooses
       caption: 'That is the tour. If it resonated, let us talk.',
       final: true,
       act: () => { closeAll(); openApp('starthere') },

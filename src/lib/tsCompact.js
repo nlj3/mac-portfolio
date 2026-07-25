@@ -14,14 +14,24 @@ let cache = null
 export async function loadRustParser() {
   if (cache) return cache
   const mod = await import('web-tree-sitter')
-  // CJS→ESM interop can wrap the Parser class as default / default.default / namespace
-  const Parser = [mod.default, mod.default && mod.default.default, mod].find(
+  // Two API shapes in the wild: older builds default-export the Parser class
+  // (with Parser.Language on it); newer ones export `Parser` and `Language` as
+  // named exports and have no default. CJS→ESM interop can also double-wrap
+  // `default`. Accept all of them rather than pinning to one.
+  const Parser = [mod.Parser, mod.default, mod.default && mod.default.default, mod].find(
     (x) => x && typeof x.init === 'function',
   )
   if (!Parser) throw new Error('web-tree-sitter: Parser.init not found (keys: ' + Object.keys(mod) + ')')
   await Parser.init({ locateFile: (name) => `/wasm/${name}` }) // resolves tree-sitter.wasm
+  // Resolve Language only AFTER init: in the 0.20 API `Parser.Language` is
+  // attached during init and is undefined before it. Newer builds instead export
+  // `Language` as its own named export.
+  const Language = [Parser.Language, mod.Language, mod.default && mod.default.Language].find(
+    (x) => x && typeof x.load === 'function',
+  )
+  if (!Language) throw new Error('web-tree-sitter: Language.load not found (keys: ' + Object.keys(mod) + ')')
   const grammarBytes = new Uint8Array(await (await fetch('/wasm/tree-sitter-rust.wasm')).arrayBuffer())
-  const Rust = await Parser.Language.load(grammarBytes)
+  const Rust = await Language.load(grammarBytes)
   const parser = new Parser()
   parser.setLanguage(Rust)
   const coreBytes = (await (await fetch('/wasm/tree-sitter.wasm')).arrayBuffer()).byteLength

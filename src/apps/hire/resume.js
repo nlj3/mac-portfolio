@@ -1,8 +1,8 @@
 // ═══════════════════════════════════════════════════════════════════
-//  RÉSUMÉ — a clean one-page PDF, generated client-side.
+//  RÉSUMÉ: a clean one-page PDF, generated client-side.
 //  jsPDF is dynamically imported so it's a separate chunk that only loads
 //  when someone actually downloads. Recruiters need one artifact they can
-//  forward — this is it.
+//  forward; this is it.
 // ═══════════════════════════════════════════════════════════════════
 
 const INK = [17, 24, 39]
@@ -39,7 +39,7 @@ export async function downloadResume() {
 
   // ── summary ──
   const summary =
-    'I build deterministic Rust runtimes, WASM execution engines, and AI infrastructure — ' +
+    'I build deterministic Rust runtimes, WASM execution engines, and AI infrastructure: ' +
     'high-assurance systems from the kernel to the edge. I ship production software solo: I own the ' +
     'architecture, direct AI to implement against contracts I design, and verify every change before it lands.'
   doc.setFont('helvetica', 'normal'); doc.setFontSize(10); doc.setTextColor(...INK)
@@ -60,14 +60,14 @@ export async function downloadResume() {
 
   // ── selected work ──
   section('Selected Work')
-  item('Kedge — deterministic AI-agent harness', 'Rust · WebAssembly · 17 crates', [
-    'A safety harness that classifies every agent action before it runs — read-only allowed, anything mutating intercepted — with byte-identical deterministic replay so a run’s effect is verifiable.',
+  item('Kedge: deterministic AI-agent harness', 'Rust · WebAssembly · 17 crates', [
+    'A safety harness that classifies every agent action before it runs (read-only allowed, anything mutating intercepted), with byte-identical deterministic replay so a run’s effect is verifiable.',
     'Core classifier compiled to WebAssembly and running live in-browser; published to crates.io (15 crates).',
   ])
-  item('WorldFrame — desktop worldbuilding app', 'Tauri · Rust · shipped', [
+  item('WorldFrame: desktop worldbuilding app', 'Tauri · Rust · shipped', [
     'Built and shipped end-to-end, solo: Ed25519 licensing, hard online verification, auto-update proven in production, and an E2EE cloud-sync vault on Cloudflare R2.',
   ])
-  item('nlj.dev — this site', 'React · WASM · Cloudflare Workers', [
+  item('nlj.dev: this site', 'React · WASM · Cloudflare Workers', [
     'A working retro OS in the browser; every app is real, including a terminal that runs the real Kedge engine and a prompt-injection-hardened LLM proxy at the edge.',
   ])
 
@@ -89,7 +89,7 @@ export async function downloadResume() {
   // ── footer ──
   gap(10)
   doc.setFont('helvetica', 'italic'); doc.setFontSize(8.5); doc.setTextColor(...MUTE)
-  doc.text('Generated from nlj.dev — the whole site is a working OS I built.', M, y)
+  doc.text('Generated from nlj.dev. The whole site is a working OS I built.', M, y)
 
   doc.save('Noel-Jackson-Resume.pdf')
 }

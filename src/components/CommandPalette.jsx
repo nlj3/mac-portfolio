@@ -3,7 +3,7 @@ import { useOS } from '../store.js'
 import { downloadResume } from '../apps/hire/resume.js'
 import './palette.css'
 
-// ⌘K / Ctrl+K command palette — instant navigation across both layers.
+// ⌘K / Ctrl+K command palette for instant navigation across both layers.
 // Opening/closing + the ⌘K shortcut are driven from App; this renders the UI.
 export default function CommandPalette() {
   const open = useOS((s) => s.palette)
@@ -25,10 +25,11 @@ export default function CommandPalette() {
         : { icon: '⚡', label: 'Launch NLJ OS', hint: 'Workstation', run: launchOS },
       { icon: '>_', label: 'Open Terminal', hint: 'NLJ-CLI · real engine', run: openInOS('terminal') },
       { icon: '🦀', label: 'Open Kedge', hint: 'Shadow-Guard demo', run: openInOS('kedge') },
+      { icon: '🛡️', label: 'Foreguard', hint: 'agent trust layer · crates.io', run: openInOS('foreguard') },
       { icon: '🤝', label: 'Hire Me', hint: 'interview + live engine', run: openInOS('scope') },
       { icon: '🌍', label: 'WorldFrame', hint: 'shipped desktop app', run: openInOS('worldframe') },
       { icon: '🐙', label: 'All Projects', hint: 'GitHub-style hub', run: openInOS('hub') },
-      { icon: '✉', label: 'Contact — noel@nlj.dev', hint: 'email', run: () => { window.location.href = 'mailto:noel@nlj.dev' } },
+      { icon: '✉', label: 'Contact: noel@nlj.dev', hint: 'email', run: () => { window.location.href = 'mailto:noel@nlj.dev' } },
       { icon: '📄', label: 'Download Résumé (PDF)', hint: 'one-page', run: () => downloadResume() },
       { icon: '↗', label: 'GitHub @nlj3', hint: 'source', run: () => window.open('https://github.com/nlj3', '_blank', 'noopener') },
     ]

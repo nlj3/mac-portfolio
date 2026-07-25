@@ -21,7 +21,7 @@ const EMPTY = {
   budget: '',
   deadline: '',
   contact: { name: '', email: '', company: '' },
-  website: '', // honeypot — stays empty for real humans
+  website: '', // honeypot, stays empty for real humans
 }
 
 const STEPS = ['Who', 'Project', 'Features', 'Details', 'Contact']
@@ -127,7 +127,7 @@ export default function ScopeGenerator() {
             </div>
             <textarea
               className="sg-brief"
-              placeholder="Tell me about it — the goal, who it's for, anything specific. (optional)"
+              placeholder="Tell me about it: the goal, who it's for, anything specific. (optional)"
               maxLength={600}
               value={intake.brief}
               onChange={(e) => set({ brief: e.target.value })}
@@ -158,7 +158,7 @@ export default function ScopeGenerator() {
             <h2 className="sg-q">A few details</h2>
             <Segment label="Scale" options={SCALES} value={intake.scale} onPick={(id) => set({ scale: id })} />
             <Segment label="Design" options={DESIGNS} value={intake.design} onPick={(id) => set({ design: id })} />
-            <Select label="Budget in mind?" hint="optional — helps me right-size the scope"
+            <Select label="Budget in mind?" hint="optional, helps me right-size the scope"
               options={BUDGETS} value={intake.budget} onPick={(id) => set({ budget: id })} placeholder="Prefer not to say" />
             <Select label="When do you need it?" options={DEADLINES} value={intake.deadline}
               onPick={(id) => set({ deadline: id })} placeholder="Not sure yet" />
@@ -221,7 +221,7 @@ function Segment({ label, options, value, onPick }) {
 function Select({ label, hint, options, value, onPick, placeholder }) {
   return (
     <div className="sg-seg-row">
-      <div className="sg-seg-label">{label}{hint ? <span className="sg-seg-hint"> — {hint}</span> : null}</div>
+      <div className="sg-seg-label">{label}{hint ? <span className="sg-seg-hint"> ({hint})</span> : null}</div>
       <select className="sg-select" value={value} onChange={(e) => onPick(e.target.value)}>
         <option value="">{placeholder}</option>
         {options.map((o) => <option key={o.id} value={o.id}>{o.label}</option>)}
@@ -253,8 +253,8 @@ function Result({ intake, brief, polishing, onReset, onComplete }) {
       ? `\nFrom: ${[intake.contact.name, intake.contact.company, intake.contact.email].filter(Boolean).join(' · ')}` : '')
 
   const mailto =
-    `mailto:noel@nlj.dev?subject=${encodeURIComponent('Project inquiry — ' + PROJECT_BY_ID[intake.projectType].label)}` +
-    `&body=${encodeURIComponent(asText + '\n\n— sent from the project form on nlj.dev')}`
+    `mailto:noel@nlj.dev?subject=${encodeURIComponent('Project inquiry: ' + PROJECT_BY_ID[intake.projectType].label)}` +
+    `&body=${encodeURIComponent(asText + '\n\n(sent from the project form on nlj.dev)')}`
 
   async function pdf() {
     setBusy(true)
@@ -267,7 +267,7 @@ function Result({ intake, brief, polishing, onReset, onComplete }) {
     setSent('sending')
     const lead = buildLead(intake, brief, answers)
     const outcome = await submitLead(lead, mailto)
-    if (outcome === 'sent' || outcome === 'mailto') onComplete?.() // lead is out — drop the saved draft
+    if (outcome === 'sent' || outcome === 'mailto') onComplete?.() // lead is out, drop the saved draft
     setSent(outcome)
   }
 
@@ -278,7 +278,7 @@ function Result({ intake, brief, polishing, onReset, onComplete }) {
         <div className="sg-body sg-done">
           <div className="sg-done-mark">✓</div>
           <h2 className="sg-q">Thanks{intake.contact.name ? `, ${intake.contact.name.split(' ')[0]}` : ''}!</h2>
-          <p className="sg-sub">Your brief just landed in my inbox — I&rsquo;ll be in touch soon. If it&rsquo;s urgent, email me at noel@nlj.dev.</p>
+          <p className="sg-sub">Your brief just landed in my inbox. I&rsquo;ll be in touch soon. If it&rsquo;s urgent, email me at noel@nlj.dev.</p>
         </div>
         <footer className="sg-foot sg-foot-result">
           <button className="sg-btn ghost" onClick={onReset}>Start another</button>
@@ -331,7 +331,7 @@ function Result({ intake, brief, polishing, onReset, onComplete }) {
                 <textarea
                   className="sg-qa-a"
                   rows={2}
-                  placeholder="Your answer (optional — but it helps me a lot)"
+                  placeholder="Your answer (optional, but it helps me a lot)"
                   value={answers[i] || ''}
                   onChange={(e) => setAnswers((a) => ({ ...a, [i]: e.target.value }))}
                 />

@@ -1,8 +1,8 @@
 // ═══════════════════════════════════════════════════════════════════
-//  HIRE ME — the catalog + the client-side "how I'd approach it" engine.
+//  HIRE ME: the catalog + the client-side "how I'd approach it" engine.
 //  Everything here runs 100% offline: pick a role, describe the problem,
 //  and get a tailored technical brief with no network at all. The edge
-//  proxy (if configured) only *sharpens* the prose — it's never required.
+//  proxy (if configured) only *sharpens* the prose; it's never required.
 // ═══════════════════════════════════════════════════════════════════
 
 export const ROLES = [
@@ -25,12 +25,12 @@ export const PRIORITIES = [
   { id: 'reliability', label: 'Reliability / rigor' },
 ]
 
-// Noel's real proof points — the client-side generator maps a stated problem to
+// Noel's real proof points. The client-side generator maps a stated problem to
 // whichever of these it can honestly stand behind.
 const PROOF = {
-  kedge: 'Kedge — my deterministic AI-agent harness in Rust (compiled to WebAssembly; its classifier is running elsewhere on this very site)',
-  worldframe: 'WorldFrame — a desktop app I shipped end-to-end with Tauri + Rust, in real users’ hands',
-  edge: 'a hardened Cloudflare Worker (rate-limited, prompt-injection-defended) that fronts an LLM — the one powering this page',
+  kedge: 'Kedge, my deterministic AI-agent harness in Rust (compiled to WebAssembly; its classifier is running elsewhere on this very site)',
+  worldframe: 'WorldFrame, a desktop app I shipped end-to-end with Tauri + Rust, in real users’ hands',
+  edge: 'a hardened Cloudflare Worker (rate-limited, prompt-injection-defended) that fronts an LLM, the one powering this page',
 }
 
 // keyword → (approach line, recommended tech, risk, proof key)
@@ -39,12 +39,12 @@ const SIGNALS = [
     re: /\b(rag|retrieval|embedding|vector|knowledge base|semantic search|chatbot|assistant|documents?)\b/i,
     approach: 'Treat it as a retrieval problem first, not a model problem: hosted LLM APIs + a vector store, hybrid (keyword + semantic) search, and strict schema validation on every hop so bad context can’t reach the model.',
     tech: ['pgvector / Qdrant', 'embeddings API', 'hybrid search', 'Zod-validated boundaries'],
-    risk: 'Retrieval accuracy and context quality — the failure mode is confident wrong answers, so I’d instrument it end-to-end before scaling.',
+    risk: 'Retrieval accuracy and context quality: the failure mode is confident wrong answers, so I’d instrument it end-to-end before scaling.',
     proof: 'kedge',
   },
   {
     re: /\b(agent|autonomous|tool[- ]?use|workflow|orchestrat|multi[- ]?step|pipeline)\b/i,
-    approach: 'Put the agent behind a harness that classifies every action before it runs — allow read-only, intercept anything mutating — with a deterministic replay log so a run’s effect is verifiable, not vibes. This is exactly what Kedge does.',
+    approach: 'Put the agent behind a harness that classifies every action before it runs (allow read-only, intercept anything mutating) with a deterministic replay log so a run’s effect is verifiable, not vibes. This is exactly what Kedge does.',
     tech: ['action classification', 'deterministic replay', 'hard budgets', 'sandboxed execution'],
     risk: 'Unbounded / unsafe actions. I’d make the safe path the default and force everything else through explicit review.',
     proof: 'kedge',
@@ -58,30 +58,30 @@ const SIGNALS = [
   },
   {
     re: /\b(edge|cloudflare|worker|serverless|global|cdn|distributed)\b/i,
-    approach: 'Run the logic at the edge, close to users, with a tiny stateless core and hard limits (rate, body size, token budget) baked in from day one — the way this site’s own LLM proxy is built.',
+    approach: 'Run the logic at the edge, close to users, with a tiny stateless core and hard limits (rate, body size, token budget) baked in from day one, the way this site’s own LLM proxy is built.',
     tech: ['Cloudflare Workers', 'KV / Durable Objects', 'edge caching', 'strict rate limits'],
     risk: 'State and consistency at the edge. I’d keep the edge stateless and push state to a single authority.',
     proof: 'edge',
   },
   {
     re: /\b(desktop|tauri|electron|native app|offline|cross[- ]?platform)\b/i,
-    approach: 'Ship it as a Tauri app: a Rust core with a web UI, small binaries, real OS integration — the same stack I shipped WorldFrame on.',
+    approach: 'Ship it as a Tauri app: a Rust core with a web UI, small binaries, real OS integration, the same stack I shipped WorldFrame on.',
     tech: ['Tauri', 'Rust core', 'auto-update', 'code signing'],
     risk: 'Update + signing pipelines. I’d get auto-update and notarisation working before feature work, because retrofitting them hurts.',
     proof: 'worldframe',
   },
 ]
 
-// A generic spine used when nothing specific matches — still concrete, never fluff.
+// A generic spine used when nothing specific matches; still concrete, never fluff.
 const DEFAULT_SIGNAL = {
-  approach: 'Start by writing the contract — the interfaces and the definition of "done" — then build the thinnest vertical slice that proves the risky part works, and harden from there.',
+  approach: 'Start by writing the contract (the interfaces and the definition of "done"), then build the thinnest vertical slice that proves the risky part works, and harden from there.',
   tech: ['TypeScript', 'a typed data layer', 'CI with real checks'],
   risk: 'Scope creep before the core is proven. I’d ship the riskiest slice first.',
   proof: 'kedge',
 }
 
 /**
- * Build a tailored technical brief from the intake — 100% client-side.
+ * Build a tailored technical brief from the intake, 100% client-side.
  * @returns {{ headline: string, steps: string[], stack: string[], risks: string[], proof: string[] }}
  */
 export function buildApproach(intake) {
@@ -98,8 +98,8 @@ export function buildApproach(intake) {
     ? `For a ${role.label} role, here’s how I’d start on the problem you described:`
     : 'Here’s how I’d start on the problem you described:'
   const steps = used.map((s) => s.approach)
-  // always close on verification — it's the throughline of everything I build
-  steps.push('Throughout, I’d keep every change verifiable — tests and real measurements before it lands, never "looks fine to me."')
+  // always close on verification; it's the throughline of everything I build
+  steps.push('Throughout, I’d keep every change verifiable: tests and real measurements before it lands, never "looks fine to me."')
 
   return { headline: roleLine, steps, stack, risks, proof }
 }

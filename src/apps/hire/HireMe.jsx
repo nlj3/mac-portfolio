@@ -17,7 +17,7 @@ const EMPTY = {
 
 const STEPS = ['Role', 'Team', 'Problem']
 
-// Optional LLM sharpening. Never required — the client-side approach always
+// Optional LLM sharpening. Never required: the client-side approach always
 // stands on its own; this only makes the prose more specific when the edge
 // proxy is configured and up.
 async function enhance(intake, { timeoutMs = 13000 } = {}) {
@@ -53,7 +53,7 @@ async function sendLead(intake, approach, answers) {
   const qa = Object.entries(answers).map(([q, a]) => ({ q, a: String(a).trim() })).filter((x) => x.a)
   const lead = {
     kind: 'hire',
-    projectType: `Hiring — ${ROLE_BY_ID[intake.role]?.label || 'role'}`,
+    projectType: `Hiring: ${ROLE_BY_ID[intake.role]?.label || 'role'}`,
     persona: 'business',
     summary: intake.problem,
     features: intake.priorities.map((id) => PRIORITIES.find((p) => p.id === id)?.label || id),
@@ -65,8 +65,8 @@ async function sendLead(intake, approach, answers) {
   }
   const body = `Role: ${lead.projectType}\n\nTheir problem:\n${intake.problem}\n\n` +
     (intake.team ? `Team: ${intake.team}\n` : '') + (intake.stack ? `Stack: ${intake.stack}\n` : '') +
-    `\nHow I'd approach it:\n${approach}\n\n— from the Hire Me flow on nlj.dev`
-  const mailto = `mailto:noel@nlj.dev?subject=${encodeURIComponent('Hiring — ' + (ROLE_BY_ID[intake.role]?.label || 'role'))}&body=${encodeURIComponent(body)}`
+    `\nHow I'd approach it:\n${approach}\n\n(from the Hire Me flow on nlj.dev)`
+  const mailto = `mailto:noel@nlj.dev?subject=${encodeURIComponent('Hiring: ' + (ROLE_BY_ID[intake.role]?.label || 'role'))}&body=${encodeURIComponent(body)}`
   if (SCOPE_PROXY) {
     try {
       const res = await fetch(SCOPE_PROXY, {
@@ -137,7 +137,7 @@ export default function HireMe() {
         {step === 1 && (
           <>
             <h2 className="hm-q">Tell me about the team.</h2>
-            <p className="hm-sub">Optional — but it sharpens the answer.</p>
+            <p className="hm-sub">Optional, but it sharpens the answer.</p>
             <div className="hm-fields">
               <input className="hm-input" placeholder="Company / team (optional)" value={intake.team}
                 onChange={(e) => set({ team: e.target.value })} />
@@ -158,10 +158,10 @@ export default function HireMe() {
         {step === 2 && (
           <>
             <h2 className="hm-q">What&rsquo;s your hardest current technical problem?</h2>
-            <p className="hm-sub">The real one. I&rsquo;ll show you how I&rsquo;d approach it — and then prove I can build.</p>
+            <p className="hm-sub">The real one. I&rsquo;ll show you how I&rsquo;d approach it, and then prove I can build.</p>
             <textarea
               className="hm-problem"
-              placeholder="e.g. We're drowning in 2M support tickets and want an assistant that answers from them accurately — without hallucinating."
+              placeholder="e.g. We're drowning in 2M support tickets and want an assistant that answers from them accurately, without hallucinating."
               maxLength={800}
               value={intake.problem}
               onChange={(e) => set({ problem: e.target.value })}
@@ -219,7 +219,7 @@ function Result({ intake, result, onReset }) {
       <div className="hm-body">
         <p className="hm-headline">{approach.headline}</p>
 
-        {/* the tailored approach — LLM prose if we got it, else the client-side steps */}
+        {/* the tailored approach: LLM prose if we got it, else the client-side steps */}
         {ai?.approach ? (
           <div className="hm-approach">{ai.approach.split(/\n{2,}/).map((p, i) => <p key={i}>{p}</p>)}</div>
         ) : (
@@ -301,7 +301,7 @@ function LiveEngine() {
     <div className="hm-engine">
       <div className="hm-engine-head">
         <span className="hm-engine-dot" />
-        Not a mockup — my real engine, running now
+        Not a mockup: my real engine, running now
         <span className="hm-engine-note">Rust → WebAssembly</span>
       </div>
       <div className="hm-engine-io">
@@ -310,14 +310,14 @@ function LiveEngine() {
           onChange={(e) => setCmd(e.target.value)} placeholder="type any shell command" />
       </div>
       {err ? (
-        <div className="hm-engine-verdict err">engine failed to load — it also lives in the Kedge app</div>
+        <div className="hm-engine-verdict err">engine failed to load; it also lives in the Kedge app</div>
       ) : verdict ? (
         <div className={`hm-engine-verdict ${verdict.intercepted ? (verdict.risk === 'high' ? 'blocked' : 'med') : 'ok'}`}>
           {verdict.intercepted ? '🛡 INTERCEPTED' : '✓ ALLOWED'}
           <span className="hm-engine-why">
             {verdict.intercepted
-              ? `verb “${verdict.verb || '(none)'}” ${verdict.risk === 'high' ? 'is a known-dangerous action' : 'isn’t recognized as read-only'} — blocked before it runs.`
-              : `verb “${verdict.verb}” is read-only — it would execute for real.`}
+              ? `verb “${verdict.verb || '(none)'}” ${verdict.risk === 'high' ? 'is a known-dangerous action' : 'isn’t recognized as read-only'}, blocked before it runs.`
+              : `verb “${verdict.verb}” is read-only; it would execute for real.`}
           </span>
         </div>
       ) : (

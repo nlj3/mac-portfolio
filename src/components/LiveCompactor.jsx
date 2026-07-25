@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { loadRustParser, compact } from '../lib/tsCompact.js'
 
-// A real Rust excerpt from kedge (crates/kedge-mcp) — edit it and watch the
+// A real Rust excerpt from kedge (crates/kedge-mcp). Edit it and watch the
 // compaction update live.
 const DEFAULT = `impl RpcClient {
     /// Issue a request and await its response, bounded by the timeout.
@@ -55,7 +55,12 @@ export default function LiveCompactor() {
         setReady(true)
         setOut(compact(parser, DEFAULT))
       })
-      .catch(() => alive && setErr(true))
+      .catch((e) => {
+        // Surface the reason: a silent catch here once hid an API-shape change
+        // in web-tree-sitter for weeks.
+        console.error('[LiveCompactor] tree-sitter engine failed to load:', e)
+        if (alive) setErr(true)
+      })
     return () => { alive = false }
   }, [])
 
@@ -79,7 +84,7 @@ export default function LiveCompactor() {
         <h2 className="xs-h2">AST compaction, running in your browser.</h2>
         <p className="lc-sub">
           Official <b>Tree-sitter compiled to WebAssembly</b> parses the Rust you type; it then
-          applies the same signature-preserving elision <b>kedge</b> uses — deterministic, no LLM,
+          applies the same signature-preserving elision <b>kedge</b> uses: deterministic, no LLM,
           no server. Edit the code; the numbers are measured live.
         </p>
       </div>
@@ -97,7 +102,7 @@ export default function LiveCompactor() {
         </div>
         <div className="lc-panes">
           <div className="lc-pane">
-            <div className="lc-label">raw source — editable</div>
+            <div className="lc-label">raw source · editable</div>
             <textarea
               className="lc-code lc-input" spellCheck={false} value={code}
               onChange={(e) => setCode(e.target.value)}
@@ -105,7 +110,7 @@ export default function LiveCompactor() {
             />
           </div>
           <div className="lc-pane">
-            <div className="lc-label">kedge-compacted — signatures kept</div>
+            <div className="lc-label">kedge-compacted · signatures kept</div>
             <pre className="lc-code lc-output"><code>{err ? '// engine failed to load' : out ? out.compacted : '// parsing…'}</code></pre>
           </div>
         </div>

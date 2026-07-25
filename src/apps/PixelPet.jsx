@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { playSound } from '../sound.js'
 
 // ═══════════════════════════════════════════════════════════════════
-//  TAMACHU — a full Tamagotchi-style virtual pet.
+//  TAMACHU: a full Tamagotchi-style virtual pet.
 //  • Life cycle: egg → baby → child → teen → adult (2 forms)
 //  • The adult it becomes depends on how well you cared for it
 //  • Hunger / happiness / energy / weight / discipline / age
@@ -56,7 +56,7 @@ const ADULT_BAD = [
 ]
 
 const KEY = 'tamachu-pet'
-const TICK = 12000 // ms per life tick — slow, passive heartbeat
+const TICK = 12000 // ms per life tick; slow, passive heartbeat
 const clamp = (n) => Math.max(0, Math.min(100, n))
 const clampN = (n, a, b) => Math.max(a, Math.min(b, n))
 const hearts = (v) => Math.max(0, Math.min(4, Math.ceil(v / 25)))
@@ -65,7 +65,7 @@ const TICKS_PER_DAY = 20
 const baseWeight = (stage) =>
   ({ egg: 5, baby: 8, child: 16, teen: 26, adult: 34 })[stage] ?? 8
 const STAGE_LEN = { egg: 5, baby: 14, child: 26, teen: 40 } // ticks per stage
-const ADULT_LIFE = 900 // very long — old age is rare, never from neglect
+const ADULT_LIFE = 900 // very long; old age is rare, never from neglect
 
 const GAMES = [
   { id: 'guess', name: 'GUESS' },
@@ -116,7 +116,7 @@ function stepPet(p) {
     return s
   }
 
-  // decay — gentle, so it's a passive companion
+  // decay is gentle, so it's a passive companion
   if (s.asleep) {
     s.energy = clamp(s.energy + 8); s.hunger = clamp(s.hunger - 0.4)
     if (s.energy >= 100) s.asleep = false
@@ -129,7 +129,7 @@ function stepPet(p) {
   }
   if (s.poopCount > 0) s.clean = clamp(s.clean - 3 * s.poopCount)
 
-  // sickness — rare, and it never kills
+  // sickness is rare, and it never kills
   const dirty = s.poopCount >= 3
   if (!s.sick && (s.hunger <= 0 || dirty) && Math.random() < 0.05) s.sick = true
   if (s.sick) { s.sickTicks++; s.happy = clamp(s.happy - 1) }
@@ -172,7 +172,7 @@ function stepPet(p) {
     s.react = 'evolved!'
   }
 
-  // no death from neglect or illness — only a peaceful, very-long old age
+  // no death from neglect or illness; only a peaceful, very-long old age
   if (s.stage === 'adult' && s.stageAge >= ADULT_LIFE) {
     s.dead = true; s.calling = false; s.react = null
   }
@@ -201,7 +201,7 @@ const statusLine = (p) =>
       ? (p.callReason === 'misbehave' ? 'wants attention' : p.callReason + '!')
       : 'happy'
 
-// eye pixels ('k') per sprite, split into left/right clusters — used to
+// eye pixels ('k') per sprite, split into left/right clusters, used to
 // close the eyes when asleep/blinking.
 const EYE_CACHE = new Map()
 function getEyes(sprite) {

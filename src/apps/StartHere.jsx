@@ -1,6 +1,6 @@
 import { useOS } from '../store.js'
 
-// The first thing a recruiter or hiring manager sees. Job: in ~30 seconds — who I
+// The first thing a recruiter or hiring manager sees. Job: in ~30 seconds: who I
 // am, what level, my edge, proof it's real, and one obvious next step. Positioning
 // leads with the systems depth (Rust / WASM / infra), not the frontend.
 const STACK = ['Rust', 'WebAssembly', 'Systems', 'TypeScript', 'Cloudflare']
@@ -21,7 +21,7 @@ export default function StartHere() {
 
       <p className="sh-lead">
         I build <b>deterministic Rust runtimes</b>, WASM execution engines, and AI
-        infrastructure — engineering high-assurance systems from the kernel to the edge.
+        infrastructure, engineering high-assurance systems from the kernel to the edge.
       </p>
 
       <div className="sh-tags">
@@ -29,7 +29,7 @@ export default function StartHere() {
       </div>
 
       <a className="sh-cta" href="mailto:noel@nlj.dev">
-        <span>Contact Noel — noel@nlj.dev</span>
+        <span>Contact Noel: noel@nlj.dev</span>
         <span className="sh-cta-arrow">→</span>
       </a>
 
@@ -43,7 +43,7 @@ export default function StartHere() {
           <span className="sh-card-emoji">🦀</span>
           <span className="sh-card-text">
             <b>Kedge</b>
-            <small>My flagship — a deterministic AI-agent harness in Rust. The real safety classifier, compiled to WebAssembly, intercepts unsafe actions live in your browser.</small>
+            <small>My flagship, a deterministic AI-agent harness in Rust. The real safety classifier, compiled to WebAssembly, intercepts unsafe actions live in your browser.</small>
           </span>
           <span className="sh-card-tag live">Run it ↗</span>
         </button>
@@ -51,7 +51,7 @@ export default function StartHere() {
           <span className="sh-card-emoji">🌍</span>
           <span className="sh-card-text">
             <b>WorldFrame</b>
-            <small>A desktop worldbuilding application built with Tauri&nbsp;+&nbsp;Rust — shipped, and in users&rsquo; hands.</small>
+            <small>A desktop worldbuilding application built with Tauri&nbsp;+&nbsp;Rust, shipped and in users&rsquo; hands.</small>
           </span>
           <span className="sh-card-tag live">Live ↗</span>
         </button>
@@ -59,14 +59,14 @@ export default function StartHere() {
           <span className="sh-card-emoji">🐙</span>
           <span className="sh-card-text">
             <b>All projects</b>
-            <small>Every app, tool, and game — each one running right here.</small>
+            <small>Every app, tool, and game, each one running right here.</small>
           </span>
           <span className="sh-card-tag arrow">→</span>
         </button>
       </div>
 
       <p className="sh-hint">
-        This whole site is a <b>working OS I built</b> — every icon is real. Open a few and poke around.
+        This whole site is a <b>working OS I built</b>, and every icon is real. Open a few and poke around.
       </p>
 
       <div className="sh-links">

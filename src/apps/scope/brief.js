@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════════════
-//  PROJECT BRIEF — the builder (pure).
+//  PROJECT BRIEF: the builder (pure).
 //  intake → validated Brief. No network, no price, no invented timeline.
 //  Deterministic: same intake always yields the same brief.
 // ═══════════════════════════════════════════════════════════════════
@@ -11,7 +11,7 @@ import { Intake, Brief } from './schema.js'
 
 const SCALE_WEEKS = { small: 3, medium: 6, large: 10 }
 
-// A rough, deterministic delivery schedule (internal planning aid — no price).
+// A rough, deterministic delivery schedule (internal planning aid, no price).
 function buildSchedule(intake) {
   const total = Math.max(2, Math.round((SCALE_WEEKS[intake.scale] || 6) + intake.features.length * 0.8))
   return PHASES.map((p) => {
@@ -20,7 +20,7 @@ function buildSchedule(intake) {
   })
 }
 
-// What I'll need from the client — from their features, plus the constants.
+// What I'll need from the client: from their features, plus the constants.
 function buildNeeds(intake) {
   const fromFeatures = intake.features.map((id) => NEEDS_BY_FEATURE[id]).filter(Boolean)
   return [...fromFeatures, ...BASE_NEEDS]
@@ -37,7 +37,7 @@ function localSummary(intake) {
     : `${feats.slice(0, -1).join(', ')} and ${feats[feats.length - 1]}`
   return (
     `A ${scale.label.toLowerCase()} ${project.label.toLowerCase()} covering ${featText}. ` +
-    `Here's what I understand you're after — let's talk specifics.`
+    `Here's what I understand you're after. Let's talk specifics.`
   )
 }
 
@@ -57,7 +57,7 @@ export function buildBrief(rawIntake) {
   const project = PROJECT_BY_ID[intake.projectType]
 
   const lineItems = [
-    { id: 'base', label: `${project.label} — foundation, build & QA` },
+    { id: 'base', label: `${project.label}: foundation, build & QA` },
     ...intake.features.map((id) => {
       const f = FEATURE_BY_ID[id]
       return { id: f.id, label: f.label }

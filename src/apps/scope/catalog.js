@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════════════
-//  SCOPE ENGINE — the rate card.
+//  SCOPE ENGINE: the rate card.
 //  Pure data. Every number the estimator produces traces back to here,
 //  so pricing is auditable and the LLM can never invent a figure.
 // ═══════════════════════════════════════════════════════════════════
@@ -11,7 +11,7 @@ export const WEEKLY_CAPACITY = 25
 /** How wide the quoted band is around the point estimate (± fraction). */
 export const BAND = 0.12
 
-/** Project archetypes — the base build (scaffolding, deploy, QA) in hours. */
+/** Project archetypes: the base build (scaffolding, deploy, QA) in hours. */
 export const PROJECT_TYPES = [
   { id: 'landing',    label: 'Landing / marketing site',   icon: '🌐', base: 18, blurb: 'A polished single site to convert visitors.' },
   { id: 'webapp',     label: 'Web app (SaaS-style)',       icon: '🧩', base: 64, blurb: 'A real product with accounts and data.' },
@@ -19,11 +19,11 @@ export const PROJECT_TYPES = [
   { id: 'extractor',  label: 'AI data extractor / scraper', icon: '🗂️', base: 40, blurb: 'Turn messy PDFs, emails, or sites into clean data.' },
   { id: 'aitool',     label: 'AI tool / agent',            icon: '🤖', base: 52, blurb: 'A custom LLM agent or feature in a usable UI.' },
   { id: 'automation', label: 'Workflow automation',        icon: '⚙️', base: 40, blurb: 'Connect systems, remove manual steps.' },
-  { id: 'localai',    label: 'Private / local AI setup',   icon: '🔒', base: 50, blurb: 'Run AI on your own hardware — full data privacy.' },
+  { id: 'localai',    label: 'Private / local AI setup',   icon: '🔒', base: 50, blurb: 'Run AI on your own hardware for full data privacy.' },
   { id: 'game',       label: 'Interactive / game',         icon: '🎮', base: 46, blurb: 'Something people actually want to play.' },
 ]
 
-/** Optional feature modules — added effort in hours. */
+/** Optional feature modules: added effort in hours. */
 export const FEATURES = [
   { id: 'auth',          label: 'User accounts & auth',        hours: 14 },
   { id: 'payments',      label: 'Payments (Stripe)',           hours: 18 },
@@ -39,21 +39,21 @@ export const FEATURES = [
   { id: 'i18n',          label: 'Multi-language',              hours: 12 },
 ]
 
-/** Scale of the build — a multiplier on the whole estimate. */
+/** Scale of the build: a multiplier on the whole estimate. */
 export const SCALES = [
   { id: 'small',  label: 'Small', detail: 'a few screens', mult: 0.85 },
   { id: 'medium', label: 'Medium', detail: 'a full product', mult: 1.0 },
   { id: 'large',  label: 'Large', detail: 'many flows & edge cases', mult: 1.35 },
 ]
 
-/** Design approach — a multiplier. */
+/** Design approach: a multiplier. */
 export const DESIGNS = [
   { id: 'template', label: 'Clean & templated', detail: 'fast, proven patterns', mult: 0.9 },
   { id: 'custom',   label: 'Custom design',     detail: 'bespoke look & feel', mult: 1.15 },
   { id: 'system',   label: 'Full design system', detail: 'reusable, branded', mult: 1.3 },
 ]
 
-/** Timeline preference — rush work carries a premium. */
+/** Timeline preference: rush work carries a premium. */
 export const TIMELINES = [
   { id: 'standard', label: 'Standard', detail: 'normal cadence', mult: 1.0 },
   { id: 'rush',     label: 'Rush', detail: 'front of the queue', mult: 1.35 },
@@ -65,27 +65,27 @@ export const RETAINER_HOURS = 8
 /** Budget bands the visitor can share (no price is shown to them). */
 export const BUDGETS = [
   { id: 'under5', label: 'Under $5k' },
-  { id: '5to15', label: '$5k – $15k' },
-  { id: '15to40', label: '$15k – $40k' },
+  { id: '5to15', label: '$5k to $15k' },
+  { id: '15to40', label: '$15k to $40k' },
   { id: 'over40', label: '$40k+' },
   { id: 'unsure', label: 'Not sure yet' },
 ]
 
-/** Who the project is for — gates how deep the AI probes. */
+/** Who the project is for: gates how deep the AI probes. */
 export const PERSONAS = [
   { id: 'personal', label: 'Just me', icon: '🙋', blurb: 'A personal project or side idea.' },
   { id: 'business', label: 'A business', icon: '🏢', blurb: 'For a company or client.' },
 ]
 
-/** Company size (business only) — `depth` = how many follow-up questions the AI asks. */
+/** Company size (business only). `depth` = how many follow-up questions the AI asks. */
 export const SIZES = [
   { id: 'solo', label: 'Solo / freelancer', detail: 'just you', depth: 2 },
-  { id: 'small', label: 'Small team', detail: '2–20 people', depth: 3 },
-  { id: 'mid', label: 'Mid-size', detail: '20–200 people', depth: 4 },
+  { id: 'small', label: 'Small team', detail: '2-20 people', depth: 3 },
+  { id: 'mid', label: 'Mid-size', detail: '20-200 people', depth: 4 },
   { id: 'large', label: 'Large company', detail: '200+ people', depth: 5 },
 ]
 
-/** What I'll need from the client — auto-derived from the features they pick. */
+/** What I'll need from the client: auto-derived from the features they pick. */
 export const NEEDS_BY_FEATURE = {
   payments: 'A Stripe (or preferred processor) account',
   cms: 'Your content, copy, and any imagery',
@@ -93,12 +93,12 @@ export const NEEDS_BY_FEATURE = {
   api: 'Docs/credentials for the third-party service to integrate',
   auth: 'Decision on sign-in methods (email, Google, SSO…)',
   notifications: 'A sending domain/service for email (or I set one up)',
-  multiuser: 'Your team/roles model — who can do what',
+  multiuser: 'Your team/roles model: who can do what',
   i18n: 'The list of languages and who provides translations',
 }
 /** Always needed, regardless of features. */
 export const BASE_NEEDS = [
-  'Brand assets — logo, colors, fonts (or a blank slate to design from)',
+  'Brand assets: logo, colors, fonts (or a blank slate to design from)',
   'A primary point of contact for decisions & sign-off',
 ]
 
@@ -115,8 +115,8 @@ export const PHASES = [
 export const DEADLINES = [
   { id: 'asap', label: 'As soon as possible' },
   { id: '1mo', label: 'Within a month' },
-  { id: '1to3', label: '1–3 months' },
-  { id: '3to6', label: '3–6 months' },
+  { id: '1to3', label: '1-3 months' },
+  { id: '3to6', label: '3-6 months' },
   { id: 'flex', label: 'Flexible / no rush' },
 ]
 

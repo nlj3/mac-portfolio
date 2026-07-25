@@ -1,12 +1,12 @@
 // ═══════════════════════════════════════════════════════════════════
-//  PROJECT BRIEF — schemas (the contracts).
+//  PROJECT BRIEF: schemas (the contracts).
 //  A lead-capture form: it collects what the visitor wants, their
-//  budget, and their timing — and hands it over as a structured brief.
+//  budget, and their timing, and hands it over as a structured brief.
 //  No price is ever shown. Zod is the single source of truth for shape:
-//   • Intake — validated before a brief is built (guards the UI).
-//   • Brief  — validated on the way out (guards the PDF / summary).
-//   • AiSummary — validates the LLM's reply so a bad response can't
-//                 reach the document.
+//   • Intake: validated before a brief is built (guards the UI).
+//   • Brief:  validated on the way out (guards the PDF / summary).
+//   • AiSummary: validates the LLM's reply so a bad response can't
+//                reach the document.
 // ═══════════════════════════════════════════════════════════════════
 import { z } from 'zod'
 import {
@@ -19,7 +19,7 @@ export const ProjectType = z.enum(PROJECT_IDS)
 export const FeatureId = z.enum(FEATURE_IDS)
 export const Scale = z.enum(SCALE_IDS)
 export const Design = z.enum(DESIGN_IDS)
-export const Budget = z.enum(BUDGET_IDS).or(z.literal('')) // optional — '' = not shared
+export const Budget = z.enum(BUDGET_IDS).or(z.literal('')) // optional; '' = not shared
 export const Deadline = z.enum(DEADLINE_IDS).or(z.literal(''))
 export const Persona = z.enum(PERSONA_IDS)
 export const Size = z.enum(SIZE_IDS).or(z.literal('')) // business only
@@ -50,16 +50,16 @@ export const LineItem = z.object({
 
 export const Phase = z.object({
   label: z.string(),
-  weeks: z.string(), // human range like "1–2 wks"
+  weeks: z.string(), // human range like "1-2 wks"
 })
 
 export const Brief = z.object({
-  lineItems: z.array(LineItem).min(1), // "what's typically involved" — no hours, no price
+  lineItems: z.array(LineItem).min(1), // "what's typically involved"; no hours, no price
   summary: z.string(),
   summarySource: z.enum(['local', 'ai']),
   questions: z.array(z.string()).default([]), // AI-generated follow-ups (empty without the LLM)
   needs: z.array(z.string()).default([]),     // what I'll need from the client (client-facing)
-  schedule: z.array(Phase).default([]),       // delivery phases (internal — for Noel)
+  schedule: z.array(Phase).default([]),       // delivery phases (internal, for Noel)
   budget: Budget,     // echoed back from intake, for the PDF / email
   deadline: Deadline,
   assumptions: z.array(z.string()),

@@ -40,7 +40,7 @@ export const apps = [
     type: 'component',
     component: StartHere,
     window: { w: 470, h: 606, x: 60, y: 46 }, // snug fit for the whole showcase, no scroll
-    onDesktop: false, // auto-opens on load — no icon needed
+    onDesktop: false, // auto-opens on load, no icon needed
     menu: true,
   },
   {
@@ -62,7 +62,7 @@ export const apps = [
     type: 'url',
     src: 'https://tryworldframe.com', // passes through to the real site
     window: { w: 900, h: 620, x: 90, y: 40 },
-    onDesktop: true, // the flagship — featured on the desktop
+    onDesktop: true, // the flagship, featured on the desktop
     menu: true,
   },
   {
@@ -73,7 +73,7 @@ export const apps = [
     type: 'iframe', // a fake GitHub profile showcasing the real work
     src: '/sites/hub/index.html',
     window: { w: 1000, h: 700, x: 70, y: 40 },
-    onDesktop: true, // the project hub — worth surfacing
+    onDesktop: true, // the project hub, worth surfacing
     menu: true,
   },
   {
@@ -84,7 +84,18 @@ export const apps = [
     type: 'iframe', // the real Rust engine, compiled to wasm and run in-window
     src: '/kedge/index.html',
     window: { w: 720, h: 580, x: 110, y: 50 },
-    onDesktop: true, // it actually runs — worth a desktop icon
+    onDesktop: true, // it actually runs, worth a desktop icon
+    menu: true,
+  },
+  {
+    id: 'foreguard',
+    name: 'Foreguard',
+    category: 'Projects',
+    icon: '🛡️',
+    // GitHub refuses to be framed, so open the repo in a real tab.
+    type: 'link',
+    src: 'https://github.com/nlj3/foreguard',
+    onDesktop: true, // the newest shipped product, worth a desktop icon
     menu: true,
   },
   {
