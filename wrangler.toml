@@ -1,0 +1,17 @@
+# Cloudflare Pages configuration for the nlj.dev portfolio.
+#
+# This is the *Pages* project. The two files under worker/ are separate
+# standalone Workers (scope-proxy and nlj-cli) and are deployed with their own
+# --config flag; they are unrelated to this one.
+#
+# Deploy:  npx wrangler pages deploy dist --project-name nlj-portfolio
+
+name = "nlj-portfolio"
+compatibility_date = "2025-01-01"
+pages_build_output_dir = "dist"
+
+# Backs functions/api/leaderboard.js. Replaces the leaderboard-data.json file
+# that the old PHP endpoint wrote to on the shared host.
+[[kv_namespaces]]
+binding = "LEADERBOARD"
+id = "183987fb9d1f4de2a9239a5202391070"

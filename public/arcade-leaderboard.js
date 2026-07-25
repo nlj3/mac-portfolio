@@ -1,8 +1,11 @@
 /* ═══════════════════════════════════════════════════════════════════
-   ARCADE LEADERBOARD — shared high-score table for the games.
-   Talks to /leaderboard.php so every visitor sees the SAME global board.
+   ARCADE LEADERBOARD: shared high-score table for the games.
+   Talks to /api/leaderboard so every visitor sees the SAME global board.
+   That endpoint is a Cloudflare Pages Function backed by KV (it replaced a
+   PHP script when the site moved off shared hosting).
    localStorage is used only as an offline cache: if the endpoint is
-   unreachable (e.g. local dev with no PHP), it degrades to per-device.
+   unreachable (e.g. local dev with no Functions runtime), it degrades to
+   per-device.
 
    Games call:  ArcadeLB.report(game, score)   // on game over
                 ArcadeLB.top(game, n)           // sync, for HI displays
@@ -10,7 +13,7 @@
    ═══════════════════════════════════════════════════════════════════ */
 (function () {
   'use strict';
-  const ENDPOINT = '/leaderboard.php';
+  const ENDPOINT = '/api/leaderboard';
   const KEY = (g) => 'arcade.scores.' + g;
   const MAX = 10;
   const NAMES = { jungle: 'JUNGLE RUN', snake: 'SNAKE', breakout: 'BREAKOUT' };
