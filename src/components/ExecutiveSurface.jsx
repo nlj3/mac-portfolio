@@ -84,14 +84,18 @@ export default function ExecutiveSurface() {
       <div className="xs-grid-bg" aria-hidden="true" />
 
       <header className="xs-nav">
-        <span className="xs-logo">nlj<span className="xs-logo-dot">.dev</span></span>
-        <nav className="xs-nav-links">
-          <a href="#work">Work</a>
-          <a href="#telemetry">Telemetry</a>
-          <button className="xs-kbd-hint" onClick={openPalette}>
-            <span>⌘</span>K
-          </button>
-        </nav>
+        {/* Inner wrapper shares max-width + padding with .xs-main, so the logo
+            lines up with the headline instead of floating out in the gutter. */}
+        <div className="xs-nav-inner">
+          <span className="xs-logo">nlj<span className="xs-logo-dot">.dev</span></span>
+          <nav className="xs-nav-links">
+            <a href="#work">Work</a>
+            <a href="#telemetry">Telemetry</a>
+            <button className="xs-kbd-hint" onClick={openPalette}>
+              <span>⌘</span>K
+            </button>
+          </nav>
+        </div>
       </header>
 
       <main className="xs-main">

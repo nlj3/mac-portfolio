@@ -35,10 +35,15 @@
 /* ── nav ── */
 .xs-nav {
   position: sticky; top: 0; z-index: 10;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 18px clamp(20px, 6vw, 64px);
   background: rgba(10, 10, 11, 0.7); backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--line);
+}
+/* Same max-width and horizontal padding as .xs-main so the nav sits on the
+   page's content column rather than the full viewport. */
+.xs-nav-inner {
+  max-width: 980px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px clamp(20px, 6vw, 44px);
 }
 .xs-logo { font-family: var(--mono); font-weight: 500; font-size: 15px; letter-spacing: -0.01em; color: var(--fg); }
 .xs-logo-dot { color: var(--muted); }

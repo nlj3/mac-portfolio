@@ -61,8 +61,12 @@ export async function downloadResume() {
   // ── selected work ──
   section('Selected Work')
   item('Kedge: deterministic AI-agent harness', 'Rust · WebAssembly · 17 crates', [
-    'A safety harness that classifies every agent action before it runs (read-only allowed, anything mutating intercepted), with byte-identical deterministic replay so a run’s effect is verifiable.',
-    'Core classifier compiled to WebAssembly and running live in-browser; published to crates.io (15 crates).',
+    'A safety harness that classifies every agent action before it runs (read-only allowed, anything mutating intercepted), journaling each step to an append-only ledger so a run can be replayed and diffed against a baseline.',
+    'Core classifier compiled to WebAssembly and running live in-browser; 15 crates published to crates.io.',
+  ])
+  item('Foreguard: dry-run trust layer for AI agents', 'Rust · MCP · crates.io', [
+    'An MCP proxy that intercepts every mutating tool call and previews its concrete effect before execution, then runs exactly the call that was approved. Extracted from Kedge as a standalone product.',
+    'Implements Meta’s Agents "Rule of Two": tracks the provenance of tool output and forces human approval when untrusted data would drive a state change, a practical defense against prompt injection (OWASP LLM01).',
   ])
   item('WorldFrame: desktop worldbuilding app', 'Tauri · Rust · shipped', [
     'Built and shipped end-to-end, solo: Ed25519 licensing, hard online verification, auto-update proven in production, and an E2EE cloud-sync vault on Cloudflare R2.',
@@ -76,7 +80,7 @@ export async function downloadResume() {
   const skills = [
     ['Languages', 'Rust · TypeScript · JavaScript · Python'],
     ['Systems', 'WebAssembly · eBPF · Tree-sitter · SQLite'],
-    ['AI infra', 'LLM agent harnesses · RAG · MCP protocol · prompt-injection defense'],
+    ['AI infra', 'LLM agent harnesses · MCP protocol · taint tracking · prompt-injection defense'],
     ['Edge / Web', 'Cloudflare Workers · React · Tauri · Vite'],
   ]
   skills.forEach(([k, v]) => {
