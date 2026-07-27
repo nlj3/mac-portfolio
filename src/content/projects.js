@@ -293,13 +293,17 @@ export const FINDINGS = {
     stat: {
       big: '0',
       unit: 'false negatives',
-      sub: '84.6% agreement · 80 tools · 10 real servers',
+      sub: '81.0% agreement · 63 scored of 98 tools · 10 real servers',
     },
     result:
-      'Scored against the readOnlyHint each server declares for itself. Six disagreements, all in the safe direction: tools the classifier called mutating that the server called read-only. Root causes were head-only read-verb matching and vocabulary gaps, both since addressed.',
+      'Ten MCP servers were run over stdio and their tool catalogues captured, annotations included: 98 tools, of which 63 carry a readOnlyHint the author set by hand. Scored against that hint, name-only. Twelve disagreements, every one in the safe direction: tools the classifier called mutating that the server called read-only. The 35 tools with no declared hint are excluded from the denominator rather than assumed either way.',
     wrong:
-      'A later attempt to close the false positives widened the read-verb match to a two-token window, which let a known-safe verb validate an unknown suffix, a structural bypass traded for ergonomics. Reverted in 0.3.1 with a regression test.',
-    cmd: 'cargo test -p kedge-core ecosystem',
+      'The figures published here before were 84.6% over 80 tools, and they were not reproducible. The command shown was `cargo test -p kedge-core ecosystem`, which passes, prints nothing, and asserts 38 hand-listed names with no per-server grouping and no comparison against any declared hint. The real number, measured properly, is lower. An earlier attempt to close the false positives also widened the read-verb match to a two-token window, letting a known-safe verb validate an unknown suffix: a structural bypass traded for ergonomics, reverted in 0.3.1 with a regression test.',
+    cmd: 'foreguard ecosystem',
+    // Catalogues are captured from live servers by scripts/capture-catalogues.mjs
+    // and committed; scoring is offline and deterministic, pinned by a golden and
+    // re-run by the `repro` CI job on a clean checkout.
+    pinned: 'github.com/nlj3/foreguard · job "repro" · 10 captured catalogues',
   },
 }
 
