@@ -1,0 +1,174 @@
+/* Findings — measured results. Deliberately not the DeepDives accordion:
+   these are meant to be scanned open, not clicked into. */
+
+.fx-lede {
+  margin: 14px 0 0;
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--muted);
+  max-width: 680px;
+}
+.fx-lede a { color: var(--accent); text-decoration: none; border-bottom: 1px solid transparent; }
+.fx-lede a:hover { border-bottom-color: var(--accent); }
+/* A global `code` rule sets a light background inherited from the retro-OS
+   layer, which on this dark surface renders as a solid white block with
+   near-white text on it. Reset it rather than inherit. */
+.fx-lede code {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--fg);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 1px 6px;
+}
+
+.fx {
+  display: grid;
+  /* 420px so four entries land as a clean 2×2 in the 1140px container. At
+     340px they fit three across and the fourth orphans on its own row. */
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  margin-top: 28px;
+}
+
+.fx-card {
+  background: var(--bg);
+  padding: 24px 22px 20px;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.fx-top { display: flex; align-items: baseline; gap: 12px; margin-bottom: 14px; }
+.fx-n { font-family: var(--mono); font-size: 12px; color: var(--faint); }
+.fx-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.fx-q {
+  margin: 0 0 18px;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.35;
+  color: var(--fg);
+}
+
+/* The number leads. Everything under it is the justification. */
+.fx-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 14px 0 18px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 18px;
+}
+.fx-big {
+  font-family: var(--mono);
+  font-size: 40px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+.fx-unit { font-size: 14px; color: var(--fg); margin-top: 6px; }
+.fx-sub { font-family: var(--mono); font-size: 11.5px; color: var(--faint); }
+
+.fx-fields { margin: 0; }
+.fx-fields dt {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.fx-fields dt.fx-dt-wrong { color: #c98a5e; }
+.fx-fields dd {
+  margin: 0 0 16px;
+  font-size: 14px;
+  line-height: 1.65;
+  color: #c0beb5;
+}
+
+/* The whole point of the section: this threshold predates the number. */
+.fx-first {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--faint);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  padding: 1px 5px;
+  margin-left: 6px;
+  vertical-align: 1px;
+}
+
+.fx-cmd {
+  margin: auto 0 0;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  overflow-x: auto;
+}
+/* The `<pre>` carries the surface; the inner `<code>` must not repaint it with
+   the inherited light background — that produced muted grey on near-white. */
+.fx-cmd code {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+  white-space: pre;
+  background: none;
+  border: 0;
+  padding: 0;
+}
+
+/* A findings page listing only answers is selecting for questions that
+   worked out. */
+.fx-open { margin-top: 34px; }
+.fx-open-h {
+  margin: 0 0 16px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.fx-open-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.fx-open-list li {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px 2px;
+  border-bottom: 1px solid var(--line);
+  max-width: 760px;
+}
+.fx-open-q { font-size: 15px; font-weight: 600; color: var(--fg); letter-spacing: -0.01em; }
+.fx-open-why { font-size: 13.5px; line-height: 1.6; color: var(--muted); }
+
+@media (max-width: 760px) {
+  .fx { grid-template-columns: 1fr; }
+  .fx-card { padding: 20px 16px 16px; }
+  .fx-big { font-size: 34px; }
+}
+
+/* Home teaser → the full set, per project. */
+.fx-more { margin-top: 26px; }
+.fx-more a {
+  font-size: 15px;
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.15s;
+}
+.fx-more a:hover { border-bottom-color: var(--accent); }
