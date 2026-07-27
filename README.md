@@ -43,7 +43,7 @@ flowchart TD
     Content -->|url| Live["Live sites in a window<br/>(WorldFrame)"]
     Content -->|link| Ext["External links<br/>(GitHub)"]
 
-    Games --> LB["leaderboard.php<br/>shared worldwide high scores"]
+    Games --> LB["Pages Function + KV<br/>shared worldwide high scores"]
     RApps --> LS["localStorage<br/>theme · pet · score cache"]
 
     classDef data fill:#1f6feb,stroke:#0b3d91,color:#fff;
@@ -87,7 +87,7 @@ Adding a project is one entry:
 | **Start Here** | The welcome hub — who I am and where to look first. |
 | **Terminal** | A working retro shell over a virtual filesystem: `ls`/`cd`/`cat`, `open <app>` (actually launches apps), `neofetch`, command history, plus a pile of developer easter eggs and a hidden `hack` sequence that unlocks a CTF-style flag. |
 | **Web Browser** | An in-OS browser where typing a real domain loads *my redesign* of that site (a pluggable site registry). |
-| **High Scores** | A worldwide arcade leaderboard, backed by a small PHP endpoint with a `localStorage` fallback. |
+| **High Scores** | A worldwide arcade leaderboard, backed by a Cloudflare Pages Function over Workers KV, with a `localStorage` fallback. |
 | **Tamachu** | A full Tamagotchi-style virtual pet — life stages, stats, sickness, discipline, death & rebirth, 3 mini-games, hand-drawn 16×16 sprites, saved across visits. |
 | **Appearance** | Control panel to switch between 7 iMac G3 theme "flavors" (live, remembered). |
 | **About Me** | The short bio + contact. |
@@ -152,10 +152,10 @@ and Discord delivery, all behind a one-command deploy.
 - **Edge / AI pipeline:** a Cloudflare Worker (KV rate-limited) that calls **Groq** (Llama 3.3) for tailored questions, runs client-tier detection + internal pricing server-side, and delivers qualified leads to **Discord** — API keys and margins never touch the browser.
 - **Type safety:** the manifest + window-store are strict-TypeScript-checked via `// @ts-check` + `tsc --noEmit` (see `src/types.d.ts`); ESLint + build run in CI.
 - **3D game:** three.js + cannon-es. Other games are hand-written vanilla JS/Canvas, each fully self-contained in `/public`.
-- **Backend:** a single PHP script (`leaderboard.php`) for shared high scores.
-- **Persistence:** `localStorage` (theme, pet, score cache); PHP for the global board.
+- **Backend:** a Cloudflare Pages Function (`functions/api/leaderboard.js`) backed by a KV namespace, for shared high scores.
+- **Persistence:** `localStorage` (theme, pet, score cache); Workers KV for the global board.
 - **Audio:** Web Audio API — sounds are synthesized, not files.
-- **Hosting:** static build + PHP on Hostinger, served at [nlj.dev](https://nlj.dev).
+- **Hosting:** Cloudflare Pages, served at [nlj.dev](https://nlj.dev).
 
 ---
 
@@ -175,9 +175,31 @@ npm run build      # → dist/
 npm run preview
 ```
 
-Deploy is the contents of `dist/` plus `public/leaderboard.php` uploaded to the
-web root. (The high-score board needs PHP; everything else is static and works
-from any static host.)
+Deploy:
+
+```sh
+npx wrangler pages deploy dist --project-name nlj-portfolio
+```
+
+Everything the site needs is in this repo. `wrangler.toml` declares the Pages
+project and binds the `LEADERBOARD` KV namespace that
+`functions/api/leaderboard.js` reads and writes; `public/_redirects` gives the
+SPA its fallback so a direct hit on `/work/kedge` does not 404.
+
+The two Workers under `worker/` (the scope proxy and the `cli.nlj.dev`
+endpoint) are separate deployments with their own configs, and each needs a
+`GROQ_API_KEY` set as a secret rather than in a file.
+
+**Previously:** a static upload plus `leaderboard.php` on Hostinger shared
+hosting. That is retired. `public/.htaccess` and the LiteSpeed notes in
+`public/_headers` are leftovers from it, harmless because each host ignores
+the other's config.
+
+### Before pushing
+
+`npm run lint` and `npm run typecheck` run as a pre-push hook (`.githooks/`,
+wired up by `npm install`). Neither is covered by `vite build`, which is how CI
+stayed red for twelve pushes without anyone noticing.
 
 ---
 

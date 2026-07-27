@@ -14,3 +14,28 @@
 # Never let the shell go stale; it points at the hashed bundles above.
 /index.html
   Cache-Control: no-cache, must-revalidate, max-age=0
+
+# The prerendered route shells (scripts/prerender.mjs) need the same treatment
+# as /index.html: they carry per-route metadata that changes whenever content
+# does, and a cached copy means a stale card in every link preview. Without
+# these, /work/kedge kept serving the pre-prerender HTML after a deploy while
+# the fresh deployment URL served the new one.
+/work
+  Cache-Control: no-cache, must-revalidate, max-age=0
+/work/*
+  Cache-Control: no-cache, must-revalidate, max-age=0
+/blog
+  Cache-Control: no-cache, must-revalidate, max-age=0
+/blog/*
+  Cache-Control: no-cache, must-revalidate, max-age=0
+
+# Baseline hardening. Deliberately NOT a Content-Security-Policy: this site
+# loads WebAssembly, runs three.js, and injects styles at runtime, so a policy
+# copied from a template would break the parts that make it worth visiting.
+# A real CSP needs to be built against the actual runtime and tested, and a
+# broken one is worse than none.
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
