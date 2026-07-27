@@ -47,7 +47,11 @@
 .xs-main { position: relative; z-index: 1; max-width: 1140px; margin: 0 auto; padding: 0 clamp(20px, 6vw, 44px) 90px; }
 
 /* ── hero ── */
-.xs-hero { padding: clamp(48px, 9vh, 104px) 0 64px; }
+/* Trimmed from `clamp(48px, 9vh, 104px) 0 64px`. That reserved up to 168px of
+   the first screen for empty space, on a page whose job is to get a reader to
+   one of three doors. Breathing room that pushes the links out of view is not
+   breathing room. */
+.xs-hero { padding: clamp(36px, 6vh, 80px) 0 48px; }
 
 /* Copy left, real output right. The proof panel is what makes the fold worth
    looking at; a name alone is not. */
@@ -328,7 +332,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--s-3);
-  padding: var(--s-6) var(--s-5) var(--s-5);
+  padding: var(--s-5);
   background: var(--bg);
   text-decoration: none;
   text-align: left;

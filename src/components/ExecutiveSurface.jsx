@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useOS } from '../store.js'
 import { downloadResume } from '../apps/hire/resume.js'
-import { PROJECTS, SITE_STATS, allFindings } from '../content/projects.js'
+import { PROJECTS, allFindings } from '../content/projects.js'
 import { POSTS } from '../content/posts.js'
 import './surface.css'
 
@@ -18,7 +18,15 @@ import './surface.css'
 // the work, and the writing. Both are real pages with their own URLs. The
 // demos moved to the project they demonstrate.
 
-const STACK = ['Rust', 'WebAssembly', 'Systems', 'TypeScript', 'Cloudflare']
+// The stack pills and the stats strip both came off this page. Measured at
+// 1440x900 the landing page ran 1316px, so the three doors were cut in half by
+// the fold and a reader had to scroll to find out that any of them led
+// anywhere. Everything here now has to earn its height.
+//
+// The pills said "Rust · WebAssembly · Systems · TypeScript · Cloudflare" one
+// line under a sentence that already said Rust and WASM, above a terminal
+// showing the tooling in use. The stats moved to /work, where someone is
+// actually evaluating rather than deciding whether to stay.
 
 const FOREGUARD = {
   cmd: 'foreguard proxy --taint -- <mcp-server>',
@@ -75,9 +83,6 @@ export default function ExecutiveSurface() {
                 Building <b>deterministic Rust runtimes</b>, WASM execution engines, and low-level
                 AI infrastructure, from the kernel to the edge.
               </p>
-              <div className="xs-pills">
-                {STACK.map((s) => <span className="xs-pill" key={s}>{s}</span>)}
-              </div>
               <div className="xs-cta-row">
                 <a className="xs-btn primary" href="mailto:noel@nlj.dev">Contact: noel@nlj.dev</a>
                 <button className="xs-btn" onClick={resume} disabled={busy}>
@@ -99,18 +104,8 @@ export default function ExecutiveSurface() {
               <pre className="xs-proof-body"><code>{FOREGUARD.transcript}</code></pre>
               <div className="xs-proof-foot">
                 A fetched page told the agent to mail everything to an attacker.
-                It was caught the moment that address reached a mutating tool.
               </div>
             </aside>
-          </div>
-
-          <div className="xs-statstrip">
-            {SITE_STATS.map((s) => (
-              <div className="xs-stat" key={s.label}>
-                <div className="xs-stat-n">{s.n}<span className="xs-stat-u">{s.unit}</span></div>
-                <div className="xs-stat-l">{s.label}</div>
-              </div>
-            ))}
           </div>
         </section>
 
@@ -128,9 +123,7 @@ export default function ExecutiveSurface() {
             <span className="u-kicker">Portfolio</span>
             <span className="xs-door-h">The work</span>
             <span className="xs-door-p">
-              Running software. Each project states its claim, the threshold for
-              failure written before the measurement, and the command that
-              regenerates the number.
+              Running software, each with the command that regenerates its numbers.
             </span>
             <ul className="xs-door-list">
               {PROJECTS.map((p) => (
@@ -149,9 +142,7 @@ export default function ExecutiveSurface() {
             <span className="u-kicker">Writing</span>
             <span className="xs-door-h">The thinking</span>
             <span className="xs-door-p">
-              Design notes on agent runtimes, isolation boundaries and
-              prompt-injection defence, including where each guarantee actually
-              ends.
+              Design notes, including where each guarantee stops holding.
             </span>
             <ul className="xs-door-list">
               {POSTS.slice(0, 3).map((p) => (
@@ -170,9 +161,7 @@ export default function ExecutiveSurface() {
             <span className="u-kicker">Interactive</span>
             <span className="xs-door-h">The workstation</span>
             <span className="xs-door-p">
-              A retro desktop I built, running in this tab. Its terminal executes
-              <code> kedge_core::classify</code>, real Rust, compiled to
-              WebAssembly, not a mock.
+              A retro desktop running real Rust in this tab, compiled to WebAssembly.
             </span>
             <div className="xs-door-term" aria-hidden="true">
               <div className="xs-door-term-bar">
