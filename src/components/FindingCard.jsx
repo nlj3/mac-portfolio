@@ -37,6 +37,16 @@ export default function FindingCard({ f }) {
       <pre className="fx-cmd">
         <code>{f.cmd}</code>
       </pre>
+
+      {/* Optional. "Run this and you get the same number" is a promise about a
+          clean clone, and for one finding there is now CI enforcing it. Saying
+          so only where it is true beats claiming it everywhere. */}
+      {f.pinned && (
+        <p className="fx-pinned">
+          <span className="fx-pinned-k">pinned in CI</span>
+          {f.pinned}
+        </p>
+      )}
     </article>
   )
 }

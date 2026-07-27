@@ -136,6 +136,25 @@
   border: 0;
 }
 
+/* `.fx-cmd` keeps its `margin-top: auto`, so it and this line travel to the
+   bottom of the card together and stay aligned across a row of cards. */
+.fx-pinned {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-2);
+  margin: var(--s-2) 0 0;
+  font-family: var(--mono);
+  font-size: var(--t-2xs);
+  letter-spacing: 0.04em;
+  color: var(--faint);
+}
+.fx-pinned-k {
+  flex: none;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--positive);
+}
+
 /* A findings page listing only answers is selecting for questions that
    worked out. */
 .fx-open { margin-top: 34px; }

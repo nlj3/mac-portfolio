@@ -22,9 +22,13 @@
 // Every figure re-measured 2026-07-26, and every one has a command:
 //
 //   crates      crates.io API, kedge* namespace                       -> 15
-//   tests       sum of `cargo test --workspace` results               -> 258
+//   tests       sum of `cargo test --workspace` results               -> 271
 //   compaction  `kedge compact` over all 41 crate sources:
 //               143,541 -> 62,085 tokens, 81,456 elided, 56.7%
+//
+// Test count re-measured 2026-07-26 after the CI reproducibility gate landed
+// (258 -> 271). kedge's README carried 43, which was stale by an order of
+// magnitude; both now read from the same `cargo test --workspace` sum.
 //
 // The compaction pair replaces "73,942 tokens compacted (measured from the
 // ledger)". The ledger holds zero compaction rows, so that number had no live
@@ -32,7 +36,7 @@
 // The replacement is a full-workspace sweep anyone can re-run.
 export const SITE_STATS = [
   { n: '15', unit: '', label: 'crates published' },
-  { n: '258', unit: '', label: 'tests passing' },
+  { n: '271', unit: '', label: 'tests passing' },
   { n: '81,456', unit: '', label: 'tokens elided' },
   { n: '56.7', unit: '%', label: 'context reduction' },
 ]
@@ -47,10 +51,14 @@ export const PROJECTS = [
     status: 'active',
     repo: 'https://github.com/nlj3/kedge',
     stack: ['Rust', '18-crate workspace', 'SQLite WAL', 'Tree-sitter', 'MCP'],
+    // These disagreed with SITE_STATS above, which is the exact failure the
+    // header of this file warns about: 43 was kedge's stale README figure, and
+    // 58.7% was a compaction rate measured on one file that has since grown.
+    // Both now come from the same measurements as SITE_STATS.
     facts: [
-      ['15', 'crates published'],
-      ['43', 'test suites green'],
-      ['58.7%', 'context reduction'],
+      ['18', 'crates in the workspace'],
+      ['271', 'tests passing'],
+      ['56.7%', 'context reduction'],
     ],
     // The capability map. Descriptions are lifted from each crate's own
     // Cargo.toml, so the page cannot describe the workspace differently from
@@ -166,19 +174,28 @@ export const FINDINGS = {
     n: 'F00',
     tag: 'adversarial suite · kedge-bench',
     question: 'Does the capability layer actually stop an attack?',
+    // Scoped deliberately. An earlier draft read "blocks forbidden tool calls
+    // without blocking legitimate ones", which is a claim about the software in
+    // general when the evidence only covers sixteen scenarios I wrote myself.
+    // The suite is named in the claim so the claim cannot outgrow it.
     claim:
-      'A deny-by-default capability manifest blocks forbidden tool calls without blocking legitimate ones.',
+      'In this deterministic adversarial suite, a deny-by-default capability manifest blocked all ten defined attacks while completing all eight benign control cases.',
     kill: 'Attack success rate alone proves nothing, because `deny everything` scores a perfect zero on it. If the manifest cannot beat both no-protection AND deny-all, it has no result.',
     stat: {
       big: '0 / 10',
-      unit: 'attacks reached the tools',
-      sub: 'and 0 of 8 legitimate calls were refused',
+      unit: 'defined attacks reached the tools',
+      sub: 'and 0 of 8 benign controls were refused',
     },
     result:
-      'Sixteen scenarios: ten attacks across indirect prompt injection, secret exfiltration, destructive action, forged authorization and excessive agency, plus six benign controls using the same tools on the same workspace. No protection lets 10 of 10 through. Deny-all blocks all ten and also all eight legitimate calls. The manifest is the only one of the three in the useful corner. A test asserts every attacked tool has a benign counterpart, so a category cannot be quietly "defended" by banning a tool outright.',
+      'Sixteen scenarios: ten attacks across indirect prompt injection, secret exfiltration, destructive action, forged authorization and excessive agency, plus six benign controls using the same tools on the same workspace. No protection lets 10 of 10 through. Deny-all blocks all ten and also all eight legitimate calls. The manifest is the only one of the three in the useful corner. A test asserts every attacked tool has a benign counterpart, so a category cannot be quietly "defended" by banning a tool outright. This is a result about a fixed suite, not a statement that kedge is secure.',
     wrong:
-      'Two limits, and both matter. These are fixed tool-call sequences, so this measures whether enforcement stops a call, never whether a model can be talked into attempting one: it is a claim about kedge-skill, not about any model. And it is self-graded. I wrote the attacks and the defence, so the suite tests what I thought of. An adversarial pass on the same code found eleven bypasses I had not thought of, three of them created by my own fixes.',
+      'Two limits, and both matter. These are fixed tool-call sequences, so this measures whether enforcement stops a call, never whether a model can be talked into attempting one: it is a claim about kedge-skill, not about any model. And it is self-graded. I wrote the attacks and the defence, so the suite tests what I thought of. An adversarial pass on the same code found eleven bypasses I had not thought of, three of them created by my own fixes. The next real step is a bigger corpus and a live model, not a better-worded page.',
     cmd: 'cargo run -p kedge-bench --example adversarial_report',
+    // The figures are pinned in the kedge repo (tests/golden/adversarial_report.txt)
+    // and re-run by the `repro` CI job on a clean, uncached checkout, so this
+    // card cannot silently drift from the code. Changing behaviour fails CI.
+    // The whole line renders in mono, so backticks here would just be noise.
+    pinned: 'github.com/nlj3/kedge · job "repro" · v0.4.0',
   },
 
   'authority-cut': {
