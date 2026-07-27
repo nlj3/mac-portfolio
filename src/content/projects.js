@@ -34,12 +34,14 @@
 // ledger)". The ledger holds zero compaction rows, so that number had no live
 // backing. It was a real measurement once and had quietly become folklore.
 // The replacement is a full-workspace sweep anyone can re-run.
-export const SITE_STATS = [
-  { n: '15', unit: '', label: 'crates published' },
-  { n: '271', unit: '', label: 'tests passing' },
-  { n: '81,456', unit: '', label: 'tokens elided' },
-  { n: '56.7', unit: '%', label: 'context reduction' },
-]
+// SITE_STATS is gone. Every figure in it was a *kedge* measurement, and it was
+// rendered as a bar across the top of /work, above a list of three projects, so
+// it read as a portfolio total. Foreguard and WorldFrame contributed nothing to
+// "271 tests passing".
+//
+// The numbers now live on the kedge page, in kedge's own `facts`, where they are
+// true. "81,456 tokens elided" was dropped rather than moved: it is the raw
+// count behind "56.7% context reduction", which is the same fact stated twice.
 
 export const PROJECTS = [
   {
@@ -51,12 +53,14 @@ export const PROJECTS = [
     status: 'active',
     repo: 'https://github.com/nlj3/kedge',
     stack: ['Rust', '18-crate workspace', 'SQLite WAL', 'Tree-sitter', 'MCP'],
-    // These disagreed with SITE_STATS above, which is the exact failure the
-    // header of this file warns about: 43 was kedge's stale README figure, and
-    // 58.7% was a compaction rate measured on one file that has since grown.
-    // Both now come from the same measurements as SITE_STATS.
+    // Measured, not remembered. An earlier version of this block read 43 tests
+    // (kedge's stale README figure) and 58.7% context reduction (a rate taken
+    // from one file that has since grown). Both come from a full-workspace run:
+    // `cargo test --workspace` summed, and `kedge compact` over all 41 crate
+    // sources (143,541 -> 62,085 tokens).
     facts: [
       ['18', 'crates in the workspace'],
+      ['15', 'published to crates.io'],
       ['271', 'tests passing'],
       ['56.7%', 'context reduction'],
     ],

@@ -48,9 +48,22 @@ function routes() {
   const out = [
     {
       path: '/',
-      // The shell's existing head is already correct for the homepage, so it is
-      // listed here only for the sitemap.
-      skip: true,
+      // The head was already correct here, so this was originally `skip: true`
+      // and the body never got written. That left the single most-shared URL on
+      // the site as `<div id="root"></div>` to anything that does not run JS,
+      // while every deeper route had a readable fallback. Exactly backwards.
+      title: 'Noel Jackson · Systems & AI Infrastructure Engineer',
+      description:
+        'Noel Jackson builds deterministic Rust runtimes, WASM execution engines and AI agent infrastructure. Kedge, a deterministic agent harness; Foreguard, a dry-run trust layer for MCP agents; WorldFrame, a local-first desktop app.',
+      body:
+        `<h1>Noel Jackson</h1><p>Systems &amp; AI Infrastructure Engineer</p>` +
+        `<p>Building deterministic Rust runtimes, WASM execution engines and low-level AI infrastructure.</p>` +
+        `<ul>${PROJECTS.map(
+          (p) => `<li><a href="/work/${p.slug}">${esc(p.name)}</a> (${esc(p.kicker)}): ${esc(p.tagline)}</li>`,
+        ).join('')}</ul>` +
+        `<p><a href="/work">Work</a> · <a href="/blog">Writing</a> · ` +
+        `<a href="https://github.com/nlj3">GitHub</a> · ` +
+        `<a href="mailto:noel@nlj.dev">noel@nlj.dev</a></p>`,
     },
     {
       path: '/work',
@@ -168,7 +181,6 @@ async function main() {
   const all = routes()
   let written = 0
   for (const r of all) {
-    if (r.skip) continue
     let html = rewriteHead(shell, r)
     html = injectNoscript(html, r)
     if (html === shell) throw new Error(`${r.path}: nothing was rewritten`)

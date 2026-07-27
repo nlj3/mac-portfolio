@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useOS } from '../store.js'
 import { downloadResume } from '../apps/hire/resume.js'
 import { PROJECTS, allFindings } from '../content/projects.js'
-import { POSTS } from '../content/posts.js'
+import { POSTS, postsRanked } from '../content/posts.js'
 import './surface.css'
 
 // ── Layer 1: the landing page ──
@@ -146,7 +146,7 @@ export default function ExecutiveSurface() {
               Design notes, including where each guarantee stops holding.
             </span>
             <ul className="xs-door-list">
-              {POSTS.slice(0, 3).map((p) => (
+              {postsRanked().slice(0, 3).map((p) => (
                 <li key={p.slug}>
                   <span className="xs-door-li-n">{p.title}</span>
                   <span className="xs-door-li-t">{p.tag}</span>

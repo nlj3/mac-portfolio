@@ -112,5 +112,21 @@ export const POSTS = [
   },
 ]
 
+// Editorial order, not array order.
+//
+// POSTS is chronological, and the homepage took `POSTS.slice(0, 3)`. That
+// promoted the three earliest notes and excluded "Your two safety checks might
+// be one check", which is the best thing here: it finds a real correlated-failure
+// bug, explains why the redundancy was never redundant, and declines to claim
+// the fix generalises. Position in an array is not a judgement about quality,
+// so the judgement is written down instead.
+const FEATURED = ['two-checks-one-check', 'taint-is-the-sensor', 'where-the-sandbox-ends']
+
+/** Strongest first, then everything else in the order it was written. */
+export const postsRanked = () => [
+  ...FEATURED.map((slug) => POSTS.find((p) => p.slug === slug)).filter(Boolean),
+  ...POSTS.filter((p) => !FEATURED.includes(p.slug)),
+]
+
 export const postBySlug = (slug) => POSTS.find((p) => p.slug === slug)
 export const postsForProject = (project) => POSTS.filter((p) => p.project === project)
