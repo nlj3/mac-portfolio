@@ -53,7 +53,7 @@
    looking at; a name alone is not. */
 .xs-hero-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 440px);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 520px);
   gap: clamp(28px, 4vw, 56px);
   align-items: center;
 }
@@ -62,10 +62,9 @@
 .xs-proof {
   min-width: 0;
   border: 1px solid var(--line);
-  border-radius: 12px;
+  border-radius: var(--radius);
   background: #08080a;
   overflow: hidden;
-  box-shadow: 0 20px 60px -30px rgba(0, 0, 0, 0.9);
 }
 .xs-proof-bar {
   display: flex; align-items: center; gap: 7px;
@@ -126,24 +125,40 @@
 .xs-avail { width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px rgba(91, 191, 122, 0.5); }
 .xs-h1 {
   font-family: var(--sans); font-weight: 640; letter-spacing: -0.035em;
-  font-size: clamp(42px, 7.5vw, 78px); line-height: 0.98; margin: 0; color: var(--fg);
+  font-size: clamp(40px, 6.4vw, 68px); line-height: 1; margin: 0; color: var(--fg);
+  /* The name is one unit. Letting it break mid-phrase put the suffix on its
+     own line at full display size, where it read as a rendering fault. */
+  text-wrap: balance;
 }
-.xs-h1-iii { font-weight: 300; color: var(--muted); }
+.xs-h1-iii {
+  font-size: 0.38em;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: var(--faint);
+  vertical-align: 0.9em;
+  margin-left: 0.14em;
+}
 .xs-h1-sub {
-  display: block; margin-top: 22px;
+  display: block; margin-top: var(--s-5);
   font-family: var(--mono); font-size: clamp(12px, 1.5vw, 14px); font-weight: 400;
   letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
 }
 .xs-lead {
-  max-width: 560px; margin: 30px 0 0; font-size: clamp(16px, 1.9vw, 18px); line-height: 1.65; color: #c0beb5;
+  max-width: 58ch; margin: var(--s-5) 0 0; font-size: clamp(16px, 1.9vw, 18px); line-height: 1.65; color: var(--fg-body);
 }
 .xs-lead b { color: var(--fg); font-weight: 600; }
-.xs-pills { display: flex; flex-wrap: wrap; gap: 8px; margin: 30px 0 0; }
-.xs-pill {
-  font-family: var(--mono); font-size: 12px; color: var(--muted);
-  background: transparent; border: 1px solid var(--line); border-radius: 6px; padding: 5px 11px;
+.xs-pills {
+  display: flex; flex-wrap: wrap; align-items: baseline;
+  gap: 0 var(--s-4); margin: var(--s-5) 0 0;
 }
-.xs-cta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 38px; }
+.xs-pill {
+  font-family: var(--mono); font-size: var(--t-sm); color: var(--faint);
+  letter-spacing: 0.04em; position: relative;
+}
+.xs-pill + .xs-pill::before {
+  content: '·'; position: absolute; left: calc(var(--s-4) / -2 - 2px); color: var(--line-strong);
+}
+.xs-cta-row { display: flex; flex-wrap: wrap; gap: var(--s-3); margin-top: var(--s-6); }
 .xs-btn {
   font: inherit; font-size: 14.5px; font-weight: 600; cursor: pointer; text-decoration: none;
   padding: 11px 18px; border-radius: 7px; border: 1px solid var(--line-2);

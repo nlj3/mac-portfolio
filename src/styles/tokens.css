@@ -141,8 +141,12 @@
   background: none;
   border-radius: 0;
   padding: 0;
-  font-size: inherit;
   font-family: var(--mono);
+  /* NOT font-size. An earlier version reset it to `inherit`, and because
+     `.xs pre` (0,1,1) outranks `.xs-proof-body` (0,1,0) it silently overrode
+     every deliberate code size on both surfaces. The hero transcript rendered
+     at 16px instead of 11px and overflowed its panel. A reset should undo the
+     thing it is there to undo and nothing else. */
 }
 
 .xs .u-code,
