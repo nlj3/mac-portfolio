@@ -68,6 +68,48 @@ export const POSTS = [
       { h: 'The honest limit', p: 'This is best-effort, not sound, and saying so is the point. The proxy sees tool inputs and outputs, not the model’s hidden reasoning, so data the model paraphrases or re-encodes can slip a substring match. What it reliably catches is the common, un-laundered untrusted→mutation flow, and where it is uncertain it fails safe: a tainted mutation with no terminal attached is denied, not executed. A security tool that overstates its guarantee is worse than one that draws the boundary and holds it.' },
     ],
   },
+  {
+    n: '05',
+    slug: 'two-checks-one-check',
+    project: 'kedge',
+    tag: 'defence in depth · verification',
+    title: 'Your two safety checks might be one check',
+    tldr: 'I wrote down that requiring two independent checks to agree meant neither could fail silently on its own. Then a tool call read a password file past both of them, because they were the same check asked twice.',
+    body: [
+      {
+        h: 'Four things looked at it, and all four were wrong',
+        p: 'A tool call asked to read /etc/shadow. The capability layer, which I had written and described in its own module header as fail-safe, permitted it under a manifest granting exactly one unrelated file. The observer then recorded the run as having exercised no capabilities at all. The verifier replayed the run against the manifest it had just produced and reported an exact fit, no violations, no unused grants. The promotion gate read all of that, marked the skill complete, and promoted it. The manifest it promoted was empty. Four separate things inspected that call. Every one of them agreed, and every one of them was wrong.',
+      },
+      {
+        h: 'What I had written down',
+        p: 'The completeness check required two conditions: nothing unnameable, and a verification result of Exact. I wrote the justification into the source and believed it. "Requiring both means neither check silently becomes load-bearing alone if the other\u2019s behaviour changes." That has the shape of an engineering argument. It is not one.',
+      },
+      {
+        h: 'Why it was false',
+        p: 'Both checks call the same function. kedge_skill::required maps a tool call to the set of capabilities it needs, and at the time it did that by looking at argument names: path, file_path, dest, and about twenty others. A server that calls its path argument resource produces a call that matches nothing in that table. A call that appears to require nothing is a call that any manifest permits. The observer calls required directly. The verifier replays the trajectory through SkillGuard, which calls required. Two names, one function, one blind spot. The two checks did not agree because they had independently reached the same conclusion. They agreed because they were the same conclusion, asked twice.',
+      },
+      {
+        h: 'The part that stings',
+        p: 'I shared that derivation on purpose, and left a comment saying why: "A second implementation here could disagree with the guard, and a manifest the guard then rejects is worse than no manifest at all." That reasoning is still correct. Sharing it was the right call. It is also the exact thing that destroyed the independence I claimed two hours later, in a different comment, without noticing.',
+      },
+      {
+        h: 'The tension nobody resolves',
+        p: 'You cannot have both properties. Two layers that share an implementation cannot disagree with each other, which means they also cannot catch each other\u2019s blind spots. Two layers implemented independently can catch each other, and will sometimes disagree, and every disagreement is a bug report someone has to triage. Defence in depth is usually discussed as though adding a layer is free and the benefit accumulates. It is neither. Every layer has some correlation with the layers next to it, and that correlation, not the count, decides whether the layer is doing any work at all. Two signals from one source is one signal, however many times you check it.',
+      },
+      {
+        h: 'What measuring it might look like',
+        p: 'Mutation testing gets closest to a number. Introduce a fault deliberately, then count how many of your checks catch it. If a single mutation to one derivation function blinds both the observer and the verifier, then with respect to that fault they were one check, and you have measured it rather than asserted it. The useful consequence is that redundancy is per-fault, not global. Two layers can be genuinely independent for path traversal and perfectly correlated for argument-name coverage, and a single claim that they are "independent" hides that completely.',
+      },
+      {
+        h: 'What I actually did, which is not that',
+        p: 'The fix was not a second implementation. It was three layers inside the same function: match the argument name, then match the shape of the value, then match the tool name. That closes the specific hole. A path-shaped string under any key is now seen, and a tool calling itself read_file while naming nothing it would read is refused outright. It is a real improvement and eleven bypasses across two rounds are now regression tests. But it is still one function, and if someone finds a fourth way to hide a path from it, all three layers go blind together exactly as before. I traded a wide hole for a narrow one. I did not buy independence.',
+      },
+      {
+        h: 'Where this leaves me',
+        p: 'I do not know how to get real independence here without a second derivation and the drift it brings, and I have not tried it. The mutation idea is untested. It may turn out that maintaining a deliberately divergent second implementation costs more than the blind spot it finds. One thing I am sure of: if you have written down that two checks protect each other, you have made a claim about their correlation, and you have probably not measured it. I had not. It took twenty minutes to find out.',
+      },
+    ],
+  },
 ]
 
 export const postBySlug = (slug) => POSTS.find((p) => p.slug === slug)
