@@ -114,56 +114,80 @@ export default function ExecutiveSurface() {
           </div>
         </section>
 
-        {/* ── two doors ── */}
+        {/* ── three doors ──
+            The OS used to sit below the two text cards. It is a whole retro
+            desktop running real Rust compiled to WASM — the most distinctive
+            thing on the site — and burying the best asset under two paragraphs
+            was the clearest mistake in the previous layout.
+
+            Each door also carries its own contents rather than a description of
+            them. Three identical blocks of prose is not a choice a reader can
+            make; three lists of real things is. */}
         <section className="xs-doors">
           <Link className="xs-door" to="/work">
             <span className="u-kicker">Portfolio</span>
             <span className="xs-door-h">The work</span>
             <span className="xs-door-p">
-              Running software, not case studies. Each project states what it claimed, the
-              threshold for failure written before the measurement, and the command that
+              Running software. Each project states its claim, the threshold for
+              failure written before the measurement, and the command that
               regenerates the number.
             </span>
-            <span className="xs-door-meta">
-              {PROJECTS.length} projects · {findingCount} measured results
+            <ul className="xs-door-list">
+              {PROJECTS.map((p) => (
+                <li key={p.slug}>
+                  <span className="xs-door-li-n">{p.name}</span>
+                  <span className="xs-door-li-t">{p.kicker}</span>
+                </li>
+              ))}
+            </ul>
+            <span className="xs-door-go">
+              {findingCount} measured results <span aria-hidden="true">→</span>
             </span>
-            <span className="xs-door-go">Browse the work →</span>
           </Link>
 
           <Link className="xs-door" to="/blog">
             <span className="u-kicker">Writing</span>
             <span className="xs-door-h">The thinking</span>
             <span className="xs-door-p">
-              Design notes on agent runtimes, isolation boundaries and prompt-injection
-              defence — including where each guarantee actually ends.
+              Design notes on agent runtimes, isolation boundaries and
+              prompt-injection defence — including where each guarantee actually
+              ends.
             </span>
-            <span className="xs-door-meta">{POSTS.length} essays</span>
-            <span className="xs-door-go">Read the writing →</span>
+            <ul className="xs-door-list">
+              {POSTS.slice(0, 3).map((p) => (
+                <li key={p.slug}>
+                  <span className="xs-door-li-n">{p.title}</span>
+                  <span className="xs-door-li-t">{p.tag}</span>
+                </li>
+              ))}
+            </ul>
+            <span className="xs-door-go">
+              {POSTS.length} essays <span aria-hidden="true">→</span>
+            </span>
           </Link>
-        </section>
 
-        {/* ── the easter egg, kept: it is the most distinctive thing here ── */}
-        <section className="xs-workstation">
-          <div className="xs-monitor">
-            <div className="xs-monitor-bar">
-              <span className="xs-dot r" /><span className="xs-dot y" /><span className="xs-dot g" />
-              <span className="xs-monitor-title">nlj-os · substrate</span>
-            </div>
-            <div className="xs-monitor-screen">
-              <div className="xs-status">
-                <span className="xs-pulse" />
-                <span className="xs-status-label">system online</span>
-                <b>NLJ-OS v2.4</b>
-                <span className="xs-muted">rust / wasm substrate</span>
+          <button className="xs-door xs-door-os" onClick={launchOS}>
+            <span className="u-kicker">Interactive</span>
+            <span className="xs-door-h">The workstation</span>
+            <span className="xs-door-p">
+              A retro desktop I built, running in this tab. Its terminal executes
+              <code> kedge_core::classify</code> — real Rust, compiled to
+              WebAssembly, not a mock.
+            </span>
+            <div className="xs-door-term" aria-hidden="true">
+              <div className="xs-door-term-bar">
+                <span className="xs-dot r" /><span className="xs-dot y" /><span className="xs-dot g" />
+                <span className="xs-door-term-t">nlj-os · substrate</span>
               </div>
-              <pre className="xs-boot-hint">{`the whole desktop is a real OS I built.
-its terminal runs kedge_core::classify: real Rust,
-compiled to WebAssembly, live in your browser.`}</pre>
-              <button className="xs-launch" onClick={launchOS}>
-                Launch NLJ OS Workstation <span className="xs-launch-arrow">→</span>
-              </button>
+              <pre className="xs-door-term-body">{`$ classify delete_file
+  MUTATING (high) · intercepted
+$ classify read_file
+  read-only · would run`}<span className="xs-caret" /></pre>
             </div>
-          </div>
+            <span className="xs-door-go">
+              Boot NLJ OS <span aria-hidden="true">→</span>
+            </span>
+          </button>
         </section>
 
         <footer className="xs-footer">

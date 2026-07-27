@@ -19,15 +19,22 @@
 // when 258 pass. Exactly the failure this module exists to prevent, found in
 // the module's own blind spot. One copy now.
 //
-//   crates    crates.io API, kedge* namespace
-//   tests     sum of `cargo test --workspace` results
-//   tokens    cumulative compaction recorded in the kedge ledger
-//   reduction crates/kedge-mcp/src/lib.rs, 9,615 -> 3,973 tokens
+// Every figure re-measured 2026-07-26, and every one has a command:
+//
+//   crates      crates.io API, kedge* namespace                       -> 15
+//   tests       sum of `cargo test --workspace` results               -> 258
+//   compaction  `kedge compact` over all 41 crate sources:
+//               143,541 -> 62,085 tokens, 81,456 elided, 56.7%
+//
+// The compaction pair replaces "73,942 tokens compacted (measured from the
+// ledger)". The ledger holds zero compaction rows, so that number had no live
+// backing — it was a real measurement once and had quietly become folklore.
+// The replacement is a full-workspace sweep anyone can re-run.
 export const SITE_STATS = [
   { n: '15', unit: '', label: 'crates published' },
   { n: '258', unit: '', label: 'tests passing' },
-  { n: '73,942', unit: '', label: 'tokens compacted' },
-  { n: '58.7', unit: '%', label: 'context reduction' },
+  { n: '81,456', unit: '', label: 'tokens elided' },
+  { n: '56.7', unit: '%', label: 'context reduction' },
 ]
 
 export const PROJECTS = [
