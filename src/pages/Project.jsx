@@ -60,6 +60,19 @@ export default function Project() {
         </div>
       )}
 
+      {project.highlights?.length > 0 && (
+        <section className="pg-section">
+          <div className="pg-section-head">
+            <h2 className="pg-h2">What it does</h2>
+          </div>
+          <ul className="pg-highlights">
+            {project.highlights.map((h) => (
+              <li key={h}>{h}</li>
+            ))}
+          </ul>
+        </section>
+      )}
+
       {findings.length > 0 ? (
         <section className="pg-section">
           <div className="pg-section-head">

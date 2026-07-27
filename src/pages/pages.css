@@ -170,3 +170,25 @@
   .pg-facts { flex-direction: column; }
   .pg-prose-p { font-size: 15px; }
 }
+
+/* Feature list for projects that ship a product rather than a result. */
+.pg-highlights { list-style: none; margin: 0; padding: 0; max-width: 68ch; }
+.pg-highlights li {
+  position: relative;
+  padding: var(--s-3) 0 var(--s-3) var(--s-5);
+  border-bottom: 1px solid var(--line);
+  font-size: var(--t-base);
+  line-height: var(--lh-body);
+  color: var(--fg-body);
+}
+.pg-highlights li:first-child { border-top: 1px solid var(--line); }
+.pg-highlights li::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: calc(var(--s-3) + 0.62em);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+}
