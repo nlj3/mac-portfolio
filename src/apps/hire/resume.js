@@ -59,16 +59,20 @@ export async function downloadResume() {
   }
 
   // ── selected work ──
+  // Numbers here must match SITE_STATS and the findings in content/projects.js.
+  // They are re-measured, not remembered: 17 crates was wrong (18), and the
+  // adversarial result did not exist when this file was written.
   section('Selected Work')
-  item('Kedge: deterministic AI-agent harness', 'Rust · WebAssembly · 17 crates', [
+  item('Kedge: deterministic AI-agent harness', 'Rust · WebAssembly · 18 crates · 271 tests', [
     'A safety harness that classifies every agent action before it runs (read-only allowed, anything mutating intercepted), journaling each step to an append-only ledger so a run can be replayed and diffed against a baseline.',
+    'Deny-by-default capability manifests declare the paths, commands and hosts a task may touch. In a deterministic 16-scenario adversarial suite it blocked all 10 defined attacks while completing all 8 benign controls; both figures are pinned by CI, which re-runs the published command on a clean checkout.',
     'Core classifier compiled to WebAssembly and running live in-browser; 15 crates published to crates.io.',
   ])
-  item('Foreguard: dry-run trust layer for AI agents', 'Rust · MCP · crates.io', [
+  item('Foreguard: dry-run trust layer for AI agents', 'Rust · MCP · six published versions', [
     'An MCP proxy that intercepts every mutating tool call and previews its concrete effect before execution, then runs exactly the call that was approved. Extracted from Kedge as a standalone product.',
-    'Implements Meta’s Agents "Rule of Two": tracks the provenance of tool output and forces human approval when untrusted data would drive a state change, a practical defense against prompt injection (OWASP LLM01).',
+    'Implements Meta’s Agents "Rule of Two": tracks the provenance of tool output and forces human approval when untrusted data would drive a state change, a practical defense against prompt injection (OWASP LLM01). The taint tracking is documented as best-effort rather than sound.',
   ])
-  item('WorldFrame: desktop worldbuilding app', 'Tauri · Rust · shipped', [
+  item('WorldFrame: desktop worldbuilding app', 'Tauri 2 · Rust · React 19 · v1.0.15', [
     'Built and shipped end-to-end, solo: Ed25519 licensing, hard online verification, auto-update proven in production, and an E2EE cloud-sync vault on Cloudflare R2.',
   ])
   item('nlj.dev: this site', 'React · WASM · Cloudflare Workers', [
@@ -95,5 +99,14 @@ export async function downloadResume() {
   doc.setFont('helvetica', 'italic'); doc.setFontSize(8.5); doc.setTextColor(...MUTE)
   doc.text('Generated from nlj.dev. The whole site is a working OS I built.', M, y)
 
+  // jsPDF draws past the bottom of the page without complaining or adding one,
+  // so an extra bullet silently loses whatever it pushed off. Adding content
+  // above means checking this. The returned y is the cursor after the footer.
+  const limit = doc.internal.pageSize.getHeight()
+  if (y > limit) {
+    console.warn(`[resume] content runs ${Math.round(y - limit)}pt past the page; trim a bullet`)
+  }
+
   doc.save('Noel-Jackson-Resume.pdf')
+  return { y, limit }
 }
