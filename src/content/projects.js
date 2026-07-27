@@ -129,9 +129,14 @@ export const PROJECTS = [
     status: 'shipped',
     repo: 'https://github.com/nlj3/foreguard',
     stack: ['Rust', 'MCP stdio proxy', 'BUSL-1.1'],
+    // These are the same measurement as the `ecosystem-validation` finding
+    // below and must move with it. They did not: the finding was corrected to
+    // the measured 81.0% while this block still read 84.6%, which is the
+    // two-copies-of-a-number failure this file's header exists to prevent,
+    // committed by the person fixing it. Both now come from `foreguard ecosystem`.
     facts: [
-      ['84.6%', 'agreement vs declared hints'],
-      ['0', 'false negatives across 80 tools'],
+      ['0', 'false negatives'],
+      ['81.0%', 'agreement vs declared hints'],
       ['10', 'real MCP servers scored'],
     ],
     findings: ['ecosystem-validation'],
