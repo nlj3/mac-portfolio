@@ -34,12 +34,16 @@
   /* ── type scale ─────────────────────────────────────────── */
   /* Seven steps, roughly 1.25×. If a size is not on this list it does not
      belong on the page. */
+  --t-2xs: 10px;     /* badges only. A badge legitimately sits below a label;
+                        forcing it up to 11px to keep the scale at seven steps
+                        would be the scale bullying the design. */
   --t-xs: 11px;      /* mono labels, kickers */
   --t-sm: 12.5px;    /* meta, captions, commands */
   --t-base: 15px;    /* body */
   --t-md: 17px;      /* lede */
   --t-lg: 21px;      /* card + row titles */
   --t-xl: 28px;      /* section headings */
+  --t-stat: clamp(34px, 3vw, 40px);   /* the one big number on a findings card */
   --t-display: clamp(36px, 5.4vw, 60px);
 
   --lh-tight: 1.15;

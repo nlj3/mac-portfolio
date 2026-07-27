@@ -7,20 +7,20 @@
 }
 .dd-summary::-webkit-details-marker { display: none; }
 .dd-summary:hover .dd-title { color: var(--accent); }
-.dd-n { font-family: var(--mono); font-size: 12px; color: var(--faint); flex: none; padding-top: 3px; }
+.dd-n { font-family: var(--mono); font-size: var(--t-sm); color: var(--faint); flex: none; padding-top: 3px; }
 .dd-head { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
-.dd-tag { font-family: var(--mono); font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--faint); }
-.dd-title { font-size: 20px; font-weight: 600; letter-spacing: -0.02em; color: var(--fg); transition: color 0.15s; }
-.dd-tldr { font-size: 14px; line-height: 1.55; color: var(--muted); max-width: 680px; }
-.dd-caret { font-family: var(--mono); font-size: 12.5px; color: var(--accent); flex: none; padding-top: 3px; white-space: nowrap; }
+.dd-tag { font-family: var(--mono); font-size: var(--t-xs); letter-spacing: 0.05em; text-transform: uppercase; color: var(--faint); }
+.dd-title { font-size: var(--t-lg); font-weight: 600; letter-spacing: -0.02em; color: var(--fg); transition: color 0.15s; }
+.dd-tldr { font-size: var(--t-base); line-height: 1.55; color: var(--muted); max-width: 680px; }
+.dd-caret { font-family: var(--mono); font-size: var(--t-sm); color: var(--accent); flex: none; padding-top: 3px; white-space: nowrap; }
 .dd-item[open] .dd-caret { color: var(--muted); }
 .dd-item[open] .dd-caret::after { content: ''; }
 
 .dd-body { padding: 4px 4px 26px; max-width: 720px; animation: dd-open 0.25s ease; }
 @keyframes dd-open { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
 .dd-block { margin-bottom: 18px; }
-.dd-b-h { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
-.dd-b-p { margin: 0; font-size: 14.5px; line-height: 1.68; color: #c0beb5; }
+.dd-b-h { font-family: var(--mono); font-size: var(--t-xs); letter-spacing: 0.05em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.dd-b-p { margin: 0; font-size: var(--t-base); line-height: 1.68; color: var(--fg-body); }
 
 @media (max-width: 760px) {
   .dd-summary { flex-wrap: wrap; gap: 10px 16px; }
