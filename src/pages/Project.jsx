@@ -94,6 +94,29 @@ export default function Project() {
         </section>
       )}
 
+      {/* How it works, for the project whose promise is about your data. A
+          feature list says what it does; this says what it does it with, which
+          is the part that can be checked. */}
+      {project.architecture?.length > 0 && (
+        <section className="pg-section">
+          <div className="pg-section-head">
+            <h2 className="pg-h2">How it works</h2>
+            <p className="pg-section-sub">
+              Read out of the source rather than recalled, so the page cannot
+              describe an architecture the app does not have.
+            </p>
+          </div>
+          <div className="pg-prose">
+            {project.architecture.map((a) => (
+              <section key={a.h}>
+                <h3 className="pg-prose-h">{a.h}</h3>
+                <p className="pg-prose-p">{a.p}</p>
+              </section>
+            ))}
+          </div>
+        </section>
+      )}
+
       {project.highlights?.length > 0 && (
         <section className="pg-section">
           <div className="pg-section-head">

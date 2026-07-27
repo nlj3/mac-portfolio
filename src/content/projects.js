@@ -165,6 +165,32 @@ export const PROJECTS = [
       'Family trees with multiple parents, spouses and lines, plus heraldry for flags and emblems.',
       'A calendar you define, a timeline that moves the world through the ages, and navigable maps.',
     ],
+    // Read out of src-tauri/ rather than remembered. Every claim here is a
+    // thing the code does; the section is on this page because "you own your
+    // files" is the product's whole promise and a promise is worth more with
+    // the mechanism attached.
+    architecture: [
+      {
+        h: 'The file is the truth, the database is disposable',
+        p: 'Every record is a Markdown file with YAML frontmatter, sitting in a normal folder you chose. WorldFrame also keeps a SQLite index under .worldview/, but that index is derived: it rebuilds itself from the Markdown when a vault is opened. You can delete the database and lose nothing. That is the difference between owning your data and being told you do, and it is checkable in about ten seconds.',
+      },
+      {
+        h: 'What the index is actually for',
+        p: 'A folder of Markdown cannot answer "which characters were in this city before the siege". The index carries entities, relationships, events, maps and wiki links, plus an FTS5 virtual table ranked with bm25 for search. Those are queries a filesystem has no way to serve, so they get a database, and the database gets to be rebuildable in exchange.',
+      },
+      {
+        h: 'Editing outside the app is a supported path, not a hazard',
+        p: 'A file watcher (notify, 600ms debounce) picks up edits made in VS Code, Obsidian or anything else, then runs read, parse frontmatter, upsert, refresh FTS, and emits an event so the interface refreshes exactly one record rather than reloading the vault. Writes the app made itself are recorded and skipped, so saving a note does not bounce back through the watcher and start a loop.',
+      },
+      {
+        h: 'Mirroring copies and never deletes',
+        p: 'A vault can be mirrored to an external drive or a synced folder. The mirror only ever adds and overwrites, so it is always a superset of the original: a bad sync cannot take the world with it. The SQLite index is deliberately excluded from the copy, because it rebuilds on open and a half-copied database is worse than no database.',
+      },
+      {
+        h: 'How it is built and shipped',
+        p: 'Tauri 2.11 with a Rust backend and a React 19 interface, so the binary is a few megabytes rather than a bundled browser. SQLite is compiled in (rusqlite, bundled), so there is nothing to install. Licensing is Ed25519 signature verification, and auto-update has been proven end to end in production on macOS and Windows.',
+      },
+    ],
     findings: [],
     openQuestions: [],
   },
