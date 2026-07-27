@@ -1,0 +1,28 @@
+#!/bin/sh
+# Run the two CI steps that a dev server and `npm run build` will never catch.
+#
+# Why this exists: CI failed on main for twelve consecutive pushes and nobody
+# noticed, because everything looked fine locally. `vite build` does not run
+# ESLint and does not typecheck, so two dead variables and a stale OSState
+# interface sailed through every local check while the badge sat red.
+#
+# Deliberately not running `npm run build`: CI does that, it takes longer than
+# the other two combined, and the failures it catches are ones you would have
+# already hit locally.
+#
+# Bypass with `git push --no-verify` when you genuinely mean to push broken code.
+
+set -e
+
+if [ ! -d node_modules ]; then
+  echo "pre-push: node_modules missing, skipping (run npm ci)" >&2
+  exit 0
+fi
+
+echo "pre-push: eslint"
+npm run --silent lint
+
+echo "pre-push: tsc --noEmit"
+npm run --silent typecheck
+
+echo "pre-push: ok"
