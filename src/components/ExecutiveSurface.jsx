@@ -28,13 +28,21 @@ import './surface.css'
 // showing the tooling in use. The stats moved to /work, where someone is
 // actually evaluating rather than deciding whether to stay.
 
+// Six lines down to two, by deleting whole lines rather than rewording them:
+// this is captured output, and a paraphrase would quietly stop being captured
+// output. It also costs nothing on desktop, where the panel sits beside a
+// taller column of text: hiding it entirely changes the hero's height by 0px,
+// measured. On mobile it stacks, so the trim is worth ~75px there.
+//
+// Gone: the "RULE-OF-TWO VIOLATION" banner, which shouts a term of art at a
+// reader who may not know it, and the "[y/N]" prompt, now only one of two ways
+// to answer since the approval UI landed.
+//
+// What is left is what happened: which tool, what it would have done, and that
+// it did not. The caption underneath already says why, in English.
 const FOREGUARD = {
   cmd: 'foreguard proxy --taint -- <mcp-server>',
-  transcript: `⛔  RULE-OF-TWO VIOLATION — this mutation carries
-    untrusted data (\`attacker@evil.com\`);
-    forcing human approval.
-⚠  \`send_email\` (high risk) · sends to attacker@evil.com
-    Execute this for real? [y/N]
+  transcript: `⚠  \`send_email\` (high risk) · sends to attacker@evil.com
     ✗ denied — dry-run, nothing executed`,
 }
 
