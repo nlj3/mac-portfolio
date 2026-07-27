@@ -60,6 +60,40 @@ export default function Project() {
         </div>
       )}
 
+      {project.crates?.length > 0 && (
+        <section className="pg-section">
+          <div className="pg-section-head">
+            <h2 className="pg-h2">What is in it</h2>
+            <p className="pg-section-sub">
+              {project.crates.reduce((n, g) => n + g.items.length, 0)} crates. Each description is
+              the crate&rsquo;s own, taken from its manifest, so this page cannot describe the
+              workspace differently from the workspace.
+            </p>
+          </div>
+          <div className="pg-crates">
+            {project.crates.map((g) => (
+              <div className="pg-crate-group" key={g.group}>
+                <div className="pg-crate-head">
+                  <h3 className="pg-crate-h">{g.group}</h3>
+                  <p className="pg-crate-blurb">{g.blurb}</p>
+                </div>
+                <ul className="pg-crate-list">
+                  {g.items.map(([name, desc, unpublished]) => (
+                    <li key={name}>
+                      <span className="pg-crate-n">
+                        {name}
+                        {unpublished && <span className="pg-crate-wip">not published</span>}
+                      </span>
+                      <span className="pg-crate-d">{desc}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
       {project.highlights?.length > 0 && (
         <section className="pg-section">
           <div className="pg-section-head">

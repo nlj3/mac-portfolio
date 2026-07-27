@@ -53,6 +53,63 @@ export const PROJECTS = [
       ['43', 'test suites green'],
       ['58.7%', 'context reduction'],
     ],
+    // The capability map. Descriptions are lifted from each crate's own
+    // Cargo.toml, so the page cannot describe the workspace differently from
+    // the workspace. Grouped by what the crate is for rather than
+    // alphabetically: a list of 18 names in order teaches nothing.
+    //
+    // `unpublished: true` marks the three that are deliberately not on
+    // crates.io. Saying which is more useful than a count that hides it.
+    crates: [
+      {
+        group: 'Execution',
+        blurb: 'The loop itself, and everything that runs inside it.',
+        items: [
+          ['kedge', 'The CLI and workspace root. The binary you actually run.'],
+          ['kedge-core', 'Domain models, ReAct state machine, budget enforcement, error types.'],
+          ['kedge-llm', 'OpenAI-compatible reasoner driving the loop: OpenAI, Ollama, vLLM, LM Studio.'],
+          ['kedge-mesh', 'Bounded Tokio subagent supervision and multi-agent orchestration.'],
+          ['kedge-exec', 'Isolated subprocess runner in its own process group, with auto-detected cargo/go/npm/pytest verification.'],
+        ],
+      },
+      {
+        group: 'Context',
+        blurb: 'Fitting a large codebase into a small window without lying about it.',
+        items: [
+          ['kedge-compact', 'Tree-sitter token compactor across Rust, Python, JavaScript, TypeScript and Go.'],
+          ['kedge-cache', 'Content-hashed cache of deterministic compaction results. Never caches model output.'],
+        ],
+      },
+      {
+        group: 'Record and replay',
+        blurb: 'What turns a run into evidence rather than an anecdote.',
+        items: [
+          ['kedge-ledger', 'SQLite audit logging and deterministic replay of agent trajectories.'],
+          ['kedge-eval', 'Event-sourced regression harness. Compares a run against a baseline ledger.'],
+          ['kedge-bench', 'A reproducible repair-task suite that generates the trajectories Forge learns from.', true],
+        ],
+      },
+      {
+        group: 'Safety',
+        blurb: 'Four independent layers, from a TOML file down to the kernel.',
+        items: [
+          ['kedge-policy', 'User-space guardrails: blocked tools, PII redaction, budgets, from a TOML file.'],
+          ['kedge-audit', 'Shadow-Guard dry-run interceptor plus a forensic security report.'],
+          ['kedge-hitl', 'Human-in-the-loop gate. Pauses the loop on a high-risk tool and asks.'],
+          ['kedge-probe', 'Kernel-level process supervision via eBPF LSM on Linux, with a portable no-op fallback.'],
+          ['kedge-skill', 'Deny-by-default capability manifests: declare what a skill may touch, prove it stayed inside.', true],
+          ['kedge-forge', 'Derives a least-privilege manifest from a recorded trajectory.', true],
+        ],
+      },
+      {
+        group: 'Interop',
+        blurb: 'How other things talk to it.',
+        items: [
+          ['kedge-mcp', 'Native Model Context Protocol client over stdio and streamable HTTP.'],
+          ['kedge-server', 'Embedded REST control API: inspect runs, resolve pending approvals.'],
+        ],
+      },
+    ],
     findings: ['authority-cut', 'empty-ledger', 'red-team', 'oracle-integrity'],
     openQuestions: ['generalization', 'repeated-structure', 'real-vocabularies'],
   },

@@ -192,3 +192,51 @@
   border-radius: 50%;
   background: var(--accent);
 }
+
+/* Capability map. Grouped by purpose, because 18 names in alphabetical order
+   teaches a reader nothing about what the thing can do. */
+.pg-crates { display: flex; flex-direction: column; gap: var(--s-7); }
+.pg-crate-head { margin-bottom: var(--s-3); }
+.pg-crate-h {
+  margin: 0 0 var(--s-1);
+  font-size: var(--t-lg);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+}
+.pg-crate-blurb { margin: 0; font-size: var(--t-base); color: var(--muted); }
+
+.pg-crate-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.pg-crate-list li {
+  display: grid;
+  grid-template-columns: 190px 1fr;
+  gap: var(--s-5);
+  padding: var(--s-3) 0;
+  border-bottom: 1px solid var(--line);
+  align-items: baseline;
+}
+.pg-crate-n {
+  font-family: var(--mono);
+  font-size: var(--t-sm);
+  color: var(--accent);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+  align-items: flex-start;
+}
+.pg-crate-wip {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--faint);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  padding: 1px 5px;
+}
+.pg-crate-d { font-size: var(--t-base); line-height: var(--lh-body); color: var(--fg-body); }
+
+@media (max-width: 700px) {
+  .pg-crate-list li { grid-template-columns: 1fr; gap: var(--s-1); }
+  .pg-crate-n { flex-direction: row; align-items: center; gap: var(--s-2); }
+}
