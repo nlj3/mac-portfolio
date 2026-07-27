@@ -195,7 +195,6 @@ export default function HireMe() {
 
 function Result({ intake, result, onReset }) {
   const { approach, ai, thinking } = result
-  const role = ROLE_BY_ID[intake.role]
   const questions = ai?.questions?.length ? ai.questions : []
   const [answers, setAnswers] = useState({})
   const [sent, setSent] = useState('')

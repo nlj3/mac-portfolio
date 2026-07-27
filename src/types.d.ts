@@ -80,6 +80,35 @@ export interface OSState {
   closeDialog: () => void
   iconSort: IconSort
   setIconSort: (iconSort: IconSort) => void
+
+  /**
+   * Two-layer shell. `false` is the dark Executive Surface landing page,
+   * `true` is the retro OS launched over it. Mirrored to `?os=true` so the
+   * workstation is deep-linkable.
+   */
+  os: boolean
+  launchOS: () => void
+  exitOS: () => void
+
+  /** Command palette, Cmd+K or Ctrl+K. Available in both layers. */
+  palette: boolean
+  openPalette: () => void
+  closePalette: () => void
+  togglePalette: () => void
+
+  /** The 60-second recruiter auto-tour. */
+  tour: boolean
+  startTour: () => void
+  endTour: () => void
+
+  /**
+   * Remote for the living Terminal. The tour drops a command here and the
+   * Terminal, if open, types and runs it against the real engine.
+   */
+  terminalCmd: string | null
+  runInTerminal: (cmd: string) => void
+  clearTerminalCmd: () => void
+
   openApp: (appId: string) => void
   close: (id: number) => void
   closeAll: () => void

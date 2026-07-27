@@ -77,7 +77,6 @@ export default function TourController() {
   function replay() { clearTimeout(timer.current); setI(0) }
 
   const step = STEPS[i] || STEPS[STEPS.length - 1]
-  const total = STEPS.length
 
   return (
     <div className="tour">
