@@ -114,14 +114,8 @@ export default function Project() {
             <p className="pg-section-sub">
               Each one states the claim, the threshold for calling it a failure written{' '}
               <em>before</em> the measurement, the number that came back, and what went wrong
-              getting there. Every figure regenerates from the command shown
-              {project.branch && (
-                <>
-                  {' '}
-                  , on branch <code>{project.branch}</code>
-                </>
-              )}
-              .
+              getting there. Every figure regenerates from the command shown, on a clean clone
+              of the default branch.
             </p>
           </div>
           <div className="fx">

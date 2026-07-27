@@ -46,7 +46,6 @@ export const PROJECTS = [
     lede: 'Agents are non-deterministic by construction: the same prompt takes a different path every run, with no way to prove what happened or reproduce a failure. kedge makes a run into a record: journaled, replayable, budget-capped, and auditable.',
     status: 'active',
     repo: 'https://github.com/nlj3/kedge',
-    branch: 'feat/kedge-skill-manifests',
     stack: ['Rust', '18-crate workspace', 'SQLite WAL', 'Tree-sitter', 'MCP'],
     facts: [
       ['15', 'crates published'],
@@ -110,7 +109,7 @@ export const PROJECTS = [
         ],
       },
     ],
-    findings: ['authority-cut', 'empty-ledger', 'red-team', 'oracle-integrity'],
+    findings: ['adversarial', 'authority-cut', 'empty-ledger', 'red-team', 'oracle-integrity'],
     openQuestions: ['generalization', 'repeated-structure', 'real-vocabularies'],
   },
   {
@@ -161,6 +160,27 @@ export const PROJECTS = [
 // ── findings: measured results, keyed so a project can reference them ──
 
 export const FINDINGS = {
+  adversarial: {
+    id: 'adversarial',
+    project: 'kedge',
+    n: 'F00',
+    tag: 'adversarial suite · kedge-bench',
+    question: 'Does the capability layer actually stop an attack?',
+    claim:
+      'A deny-by-default capability manifest blocks forbidden tool calls without blocking legitimate ones.',
+    kill: 'Attack success rate alone proves nothing, because `deny everything` scores a perfect zero on it. If the manifest cannot beat both no-protection AND deny-all, it has no result.',
+    stat: {
+      big: '0 / 10',
+      unit: 'attacks reached the tools',
+      sub: 'and 0 of 8 legitimate calls were refused',
+    },
+    result:
+      'Sixteen scenarios: ten attacks across indirect prompt injection, secret exfiltration, destructive action, forged authorization and excessive agency, plus six benign controls using the same tools on the same workspace. No protection lets 10 of 10 through. Deny-all blocks all ten and also all eight legitimate calls. The manifest is the only one of the three in the useful corner. A test asserts every attacked tool has a benign counterpart, so a category cannot be quietly "defended" by banning a tool outright.',
+    wrong:
+      'Two limits, and both matter. These are fixed tool-call sequences, so this measures whether enforcement stops a call, never whether a model can be talked into attempting one: it is a claim about kedge-skill, not about any model. And it is self-graded. I wrote the attacks and the defence, so the suite tests what I thought of. An adversarial pass on the same code found eleven bypasses I had not thought of, three of them created by my own fixes.',
+    cmd: 'cargo run -p kedge-bench --example adversarial_report',
+  },
+
   'authority-cut': {
     id: 'authority-cut',
     project: 'kedge',
