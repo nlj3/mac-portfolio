@@ -19,24 +19,11 @@
   background: radial-gradient(60% 40% at 50% -8%, rgba(255, 255, 255, 0.05), transparent 72%);
 }
 
-/* ── nav ── */
-.xs-nav {
-  position: sticky; top: 0; z-index: 10;
-  background: rgba(10, 10, 11, 0.7); backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--line);
-}
-/* Same max-width and horizontal padding as .xs-main so the nav sits on the
-   page's content column rather than the full viewport. */
-.xs-nav-inner {
-  max-width: 1140px; margin: 0 auto;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 18px clamp(20px, 6vw, 44px);
-}
+/* The landing page has no top nav. `.xs-logo` stays because the footer uses it;
+   `.xs-nav*` went with the header. Routed pages have their own nav in
+   PageShell and are unaffected. */
 .xs-logo { font-family: var(--mono); font-weight: 500; font-size: var(--t-base); letter-spacing: -0.01em; color: var(--fg); }
 .xs-logo-dot { color: var(--muted); }
-.xs-nav-links { display: flex; align-items: center; gap: 26px; }
-.xs-nav-links a { color: var(--muted); text-decoration: none; font-size: var(--t-sm); transition: color 0.15s; }
-.xs-nav-links a:hover { color: var(--fg); }
 .xs-kbd-hint {
   display: inline-flex; align-items: center; gap: 3px; font-family: var(--mono); font-size: var(--t-sm);
   color: var(--muted); background: transparent; border: 1px solid var(--line-2);
@@ -303,8 +290,6 @@
   /* The nav links used to be decorative — the page carried everything and
      these were shortcuts. They are now the only route to the work and the
      writing, so they stay visible and the label shrinks instead. */
-  .xs-nav-links { gap: var(--s-4); }
-  .xs-nav-links a { font-size: var(--t-sm); }
   .xs-card-head { flex-direction: column; gap: 12px; }
   .lc-panes { grid-template-columns: 1fr; }
   .lc-pane:last-child { border-left: 0; border-top: 1px solid var(--line); }

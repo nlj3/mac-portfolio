@@ -14,6 +14,12 @@ import './surface.css'
 // it to find the one thing they came for, and nothing was allowed to be the
 // most important.
 //
+// The top header came off too: a logo plus Work/Writing links, directly above
+// a hero with the same name in 78px type and three doors that include Work and
+// Writing. It was a second copy of the page's own navigation, spending 62px of
+// the fold to repeat what was already there. Routed pages keep their own nav
+// (PageShell), so this only affects the landing page.
+//
 // Now it does one job: say who this is, prove it once, and offer two doors:
 // the work, and the writing. Both are real pages with their own URLs. The
 // demos moved to the project they demonstrate.
@@ -61,19 +67,6 @@ export default function ExecutiveSurface() {
   return (
     <div className="xs">
       <div className="xs-grid-bg" aria-hidden="true" />
-
-      <header className="xs-nav">
-        <div className="xs-nav-inner">
-          <span className="xs-logo">nlj<span className="xs-logo-dot">.dev</span></span>
-          <nav className="xs-nav-links">
-            <Link to="/work">Work</Link>
-            <Link to="/blog">Writing</Link>
-            <button className="xs-kbd-hint" onClick={openPalette}>
-              <span>⌘</span>K
-            </button>
-          </nav>
-        </div>
-      </header>
 
       <main className="xs-main">
         {/* ── hero ── */}
@@ -196,6 +189,13 @@ $ classify read_file
             <a href="mailto:noel@nlj.dev">noel@nlj.dev</a>
             <a href="https://github.com/nlj3" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
             <button className="xs-link-btn" onClick={launchOS}>Launch NLJ OS →</button>
+            {/* ⌘K works everywhere (bound in App.jsx); this is the only thing
+                that says so now the header is gone. Down here it costs nothing
+                above the fold, and anyone who wants a command palette will
+                look for it rather than need it advertised. */}
+            <button className="xs-kbd-hint" onClick={openPalette}>
+              <span>⌘</span>K
+            </button>
           </div>
         </footer>
       </main>
