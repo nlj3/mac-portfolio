@@ -1,0 +1,141 @@
+/* Routed-page frame. Same palette as the home surface, but the type is set
+   the way tryworldframe.com sets it: a mono kicker, a serif display line with
+   room around it, and a lot of air. */
+
+.ps {
+  position: relative;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--fg);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Faint graph paper. Fades out down the page so it frames the head and then
+   gets out of the way of the reading. */
+.ps-grid {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(180deg, #000 0%, transparent 62%);
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 62%);
+}
+
+.ps-nav,
+.ps-main,
+.ps-footer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto;
+  padding-inline: 32px;
+}
+
+.ps-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 78px;
+  border-bottom: 1px solid var(--line);
+}
+.ps-brand {
+  font-family: var(--mono);
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  color: var(--fg);
+  text-decoration: none;
+}
+.ps-brand-dot { color: var(--accent); }
+.ps-links { display: flex; gap: 26px; }
+.ps-links a {
+  font-size: 14px;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.ps-links a:hover { color: var(--fg); }
+
+.ps-main { flex: 1; padding-top: 68px; padding-bottom: 96px; }
+
+.ps-head { max-width: 760px; margin-bottom: 56px; }
+
+.ps-back {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--muted);
+  text-decoration: none;
+  margin-bottom: 26px;
+  transition: color 0.15s;
+}
+.ps-back:hover { color: var(--accent); }
+
+.ps-kicker {
+  margin: 0 0 18px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+/* The display face. Serif here and nowhere else on the page, so it reads as
+   the title rather than as decoration. */
+.ps-title {
+  margin: 0;
+  font-family: ui-serif, Georgia, "Iowan Old Style", "Times New Roman", serif;
+  font-size: clamp(34px, 5.2vw, 58px);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+}
+.ps-title em { font-style: italic; color: var(--accent); }
+
+.ps-lede {
+  margin: 24px 0 0;
+  font-size: 17px;
+  line-height: 1.62;
+  color: var(--muted);
+  max-width: 680px;
+}
+
+.ps-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 18px;
+  margin-top: 28px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--faint);
+}
+.ps-meta a { color: var(--accent); text-decoration: none; }
+.ps-meta a:hover { text-decoration: underline; }
+
+.ps-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 76px;
+  border-top: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--faint);
+}
+.ps-footer a { color: var(--faint); text-decoration: none; }
+.ps-footer a:hover { color: var(--muted); }
+
+@media (max-width: 700px) {
+  .ps-nav, .ps-main, .ps-footer { padding-inline: 20px; }
+  .ps-main { padding-top: 44px; padding-bottom: 64px; }
+  .ps-head { margin-bottom: 40px; }
+  .ps-links { gap: 16px; }
+  .ps-links a { font-size: 13px; }
+}

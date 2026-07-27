@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Route, Routes } from 'react-router-dom'
 import MenuBar from './components/MenuBar.jsx'
 import Desktop from './components/Desktop.jsx'
 import Window from './components/Window.jsx'
@@ -7,6 +8,11 @@ import BootSequence from './components/BootSequence.jsx'
 import TourController from './components/TourController.jsx'
 import ExecutiveSurface from './components/ExecutiveSurface.jsx'
 import CommandPalette from './components/CommandPalette.jsx'
+import ScrollToTop from './components/ScrollToTop.jsx'
+import Work from './pages/Work.jsx'
+import Project from './pages/Project.jsx'
+import Blog from './pages/Blog.jsx'
+import Post from './pages/Post.jsx'
 import OsTaskbar from './components/OsTaskbar.jsx'
 import { useOS } from './store.js'
 import { applyTheme } from './themes.js'
@@ -63,11 +69,24 @@ export default function App() {
     return () => window.removeEventListener('keydown', onKey)
   }, [os, booting, tour, dialog, paletteOpen, togglePalette, closePalette, exitOS])
 
-  // ── Layer 1: Executive Surface (default) ──
+  // ── Layer 1: the public site ──
+  //
+  // Routed pages live here rather than under the OS layer: the OS is a
+  // full-screen takeover, and a reader who followed a link to one project
+  // should land on that project, not boot a desktop.
   if (!os) {
     return (
       <>
-        <ExecutiveSurface />
+        <ScrollToTop />
+        <Routes>
+          <Route path="/" element={<ExecutiveSurface />} />
+          <Route path="/work" element={<Work />} />
+          <Route path="/work/:slug" element={<Project />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<Post />} />
+          {/* Anything unknown falls back to the surface rather than a dead end. */}
+          <Route path="*" element={<ExecutiveSurface />} />
+        </Routes>
         <CommandPalette />
       </>
     )

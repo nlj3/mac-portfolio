@@ -4,6 +4,7 @@ import { downloadResume } from '../apps/hire/resume.js'
 import LiveCompactor from './LiveCompactor.jsx'
 import CrateGraph from './CrateGraph.jsx'
 import DeepDives from './DeepDives.jsx'
+import Findings from './Findings.jsx'
 import './surface.css'
 
 // ── Layer 1: the Executive Engineering Surface ──
@@ -291,6 +292,9 @@ compiled to WebAssembly, live in your browser.`}</pre>
 
         {/* ── engineering deep dives ── */}
         <DeepDives />
+
+        {/* ── measured results ── */}
+        <Findings />
 
         {/* ── live telemetry ── */}
         <Telemetry />

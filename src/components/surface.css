@@ -3,7 +3,12 @@
    Near-black, warm off-white, hairlines, one restrained accent.
    Flat, high-contrast, no glows. Mono for labels/code, sans for reading.
    ═══════════════════════════════════════════════════════════════════ */
-.xs {
+/* The token block is shared with the routed pages (`.ps`, pageshell.css).
+   Declaring it once here rather than copying it there is deliberate: two
+   palettes drift, and a drifted accent colour looks like a design choice.
+   It stays off `:root` so the retro-OS layer keeps its own themes. */
+.xs,
+.ps {
   --bg: #0a0a0b;
   --bg-2: #0e0e10;
   --card: #0d0d0f;
@@ -17,11 +22,17 @@
   --mono: "SF Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
   --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, system-ui, sans-serif;
 
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-family: var(--sans);
+}
+
+/* Layout stays on `.xs` alone — the surface is a fixed, self-scrolling pane,
+   and a routed page must not be. */
+.xs {
   position: fixed; inset: 0; z-index: 1;
   background: var(--bg); color: var(--fg);
-  font-family: var(--sans);
   overflow-y: auto; overflow-x: hidden;
-  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
   animation: xs-fade 0.5s ease;
 }
 @keyframes xs-fade { from { opacity: 0; } to { opacity: 1; } }
