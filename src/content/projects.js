@@ -22,9 +22,9 @@ export const PROJECTS = [
     status: 'active',
     repo: 'https://github.com/nlj3/kedge',
     branch: 'feat/kedge-skill-manifests',
-    stack: ['Rust', '19-crate workspace', 'SQLite WAL', 'Tree-sitter', 'MCP'],
+    stack: ['Rust', '18-crate workspace', 'SQLite WAL', 'Tree-sitter', 'MCP'],
     facts: [
-      ['16', 'crates published'],
+      ['15', 'crates published'],
       ['43', 'test suites green'],
       ['58.7%', 'context reduction'],
     ],
