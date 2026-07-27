@@ -12,6 +12,24 @@
 //  honest `cmd`, it is a design note and belongs in DeepDives instead.
 // ═══════════════════════════════════════════════════════════════════
 
+// Site-level headline numbers.
+//
+// These lived in ExecutiveSurface.jsx as a second copy and had already drifted
+// from reality — "16 crates published" when 15 are live, "199 tests passing"
+// when 258 pass. Exactly the failure this module exists to prevent, found in
+// the module's own blind spot. One copy now.
+//
+//   crates    crates.io API, kedge* namespace
+//   tests     sum of `cargo test --workspace` results
+//   tokens    cumulative compaction recorded in the kedge ledger
+//   reduction crates/kedge-mcp/src/lib.rs, 9,615 -> 3,973 tokens
+export const SITE_STATS = [
+  { n: '15', unit: '', label: 'crates published' },
+  { n: '258', unit: '', label: 'tests passing' },
+  { n: '73,942', unit: '', label: 'tokens compacted' },
+  { n: '58.7', unit: '%', label: 'context reduction' },
+]
+
 export const PROJECTS = [
   {
     slug: 'kedge',

@@ -3,30 +3,6 @@
    Near-black, warm off-white, hairlines, one restrained accent.
    Flat, high-contrast, no glows. Mono for labels/code, sans for reading.
    ═══════════════════════════════════════════════════════════════════ */
-/* The token block is shared with the routed pages (`.ps`, pageshell.css).
-   Declaring it once here rather than copying it there is deliberate: two
-   palettes drift, and a drifted accent colour looks like a design choice.
-   It stays off `:root` so the retro-OS layer keeps its own themes. */
-.xs,
-.ps {
-  --bg: #0a0a0b;
-  --bg-2: #0e0e10;
-  --card: #0d0d0f;
-  --fg: #f1efe9;
-  --muted: #8a887f;
-  --faint: #5a594f;
-  --line: rgba(255, 255, 255, 0.08);
-  --line-2: rgba(255, 255, 255, 0.15);
-  --accent: #8fb0ce;
-  --green: #5bbf7a;
-  --mono: "SF Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
-  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, system-ui, sans-serif;
-
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  font-family: var(--sans);
-}
-
 /* Layout stays on `.xs` alone — the surface is a fixed, self-scrolling pane,
    and a routed page must not be. */
 .xs {
@@ -299,10 +275,72 @@
   .xs-diff-pane:last-child { border-left: 0; border-top: 1px solid var(--line); }
   .xs-diff-arrow { display: none; }
   .xs-metrics { grid-template-columns: 1fr 1fr; gap: 22px; }
-  .xs-nav-links a { display: none; }
+  /* The nav links used to be decorative — the page carried everything and
+     these were shortcuts. They are now the only route to the work and the
+     writing, so they stay visible and the label shrinks instead. */
+  .xs-nav-links { gap: var(--s-4); }
+  .xs-nav-links a { font-size: var(--t-sm); }
   .xs-card-head { flex-direction: column; gap: 12px; }
   .lc-panes { grid-template-columns: 1fr; }
   .lc-pane:last-child { border-left: 0; border-top: 1px solid var(--line); }
   .lc-code { height: 240px; }
 }
 @media (prefers-reduced-motion: reduce) { .xs, .xs-pulse { animation: none; } }
+
+/* ═══ two doors ═══════════════════════════════════════════════════
+   The landing page's only job after the hero: send the reader to the
+   work or to the writing. Two targets, equal weight, no third option
+   competing with them. */
+.xs-doors {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  margin: var(--s-9) 0;
+}
+.xs-door {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  padding: var(--s-7) var(--s-6) var(--s-6);
+  background: var(--bg);
+  text-decoration: none;
+  transition: background var(--dur) var(--ease);
+}
+.xs-door:hover { background: var(--bg-raised); }
+.xs-door:hover .xs-door-go { color: var(--fg); }
+.xs-door:hover .xs-door-h { color: var(--accent); }
+
+.xs-door-h {
+  font-family: var(--serif);
+  font-size: var(--t-xl);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+  transition: color var(--dur) var(--ease);
+}
+.xs-door-p {
+  font-size: var(--t-base);
+  line-height: var(--lh-body);
+  color: var(--muted);
+  max-width: 46ch;
+}
+.xs-door-meta {
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  color: var(--faint);
+  margin-top: var(--s-2);
+}
+.xs-door-go {
+  font-size: var(--t-base);
+  color: var(--accent);
+  margin-top: auto;
+  padding-top: var(--s-5);
+  transition: color var(--dur) var(--ease);
+}
+
+@media (max-width: 760px) {
+  .xs-doors { grid-template-columns: 1fr; margin: var(--s-8) 0; }
+  .xs-door { padding: var(--s-6) var(--s-5) var(--s-5); }
+}

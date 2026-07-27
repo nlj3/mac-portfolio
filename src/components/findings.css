@@ -10,9 +10,7 @@
 }
 .fx-lede a { color: var(--accent); text-decoration: none; border-bottom: 1px solid transparent; }
 .fx-lede a:hover { border-bottom-color: var(--accent); }
-/* A global `code` rule sets a light background inherited from the retro-OS
-   layer, which on this dark surface renders as a solid white block with
-   near-white text on it. Reset it rather than inherit. */
+/* Chip styling; the dark-surface reset now lives in tokens.css. */
 .fx-lede code {
   font-family: var(--mono);
   font-size: 12.5px;
@@ -121,8 +119,6 @@
   border-radius: 3px;
   overflow-x: auto;
 }
-/* The `<pre>` carries the surface; the inner `<code>` must not repaint it with
-   the inherited light background — that produced muted grey on near-white. */
 .fx-cmd code {
   font-family: var(--mono);
   font-size: 12px;
