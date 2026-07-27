@@ -3,7 +3,7 @@ import FindingCard from './FindingCard.jsx'
 import { FINDINGS } from '../content/projects.js'
 import './findings.css'
 
-// Home-page teaser. The full set lives on each project page — this shows the
+// Home-page teaser. The full set lives on each project page. This shows the
 // two that carry the most weight and sends the reader there, rather than
 // reprinting everything above the fold.
 const TEASER = ['authority-cut', 'red-team']

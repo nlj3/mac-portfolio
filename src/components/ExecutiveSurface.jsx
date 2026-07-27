@@ -14,7 +14,7 @@ import './surface.css'
 // it to find the one thing they came for, and nothing was allowed to be the
 // most important.
 //
-// Now it does one job — say who this is, prove it once, and offer two doors:
+// Now it does one job: say who this is, prove it once, and offer two doors:
 // the work, and the writing. Both are real pages with their own URLs. The
 // demos moved to the project they demonstrate.
 
@@ -116,8 +116,8 @@ export default function ExecutiveSurface() {
 
         {/* ── three doors ──
             The OS used to sit below the two text cards. It is a whole retro
-            desktop running real Rust compiled to WASM — the most distinctive
-            thing on the site — and burying the best asset under two paragraphs
+            desktop running real Rust compiled to WASM, the most distinctive
+            thing on the site, and burying the best asset under two paragraphs
             was the clearest mistake in the previous layout.
 
             Each door also carries its own contents rather than a description of
@@ -150,7 +150,7 @@ export default function ExecutiveSurface() {
             <span className="xs-door-h">The thinking</span>
             <span className="xs-door-p">
               Design notes on agent runtimes, isolation boundaries and
-              prompt-injection defence — including where each guarantee actually
+              prompt-injection defence, including where each guarantee actually
               ends.
             </span>
             <ul className="xs-door-list">
@@ -171,7 +171,7 @@ export default function ExecutiveSurface() {
             <span className="xs-door-h">The workstation</span>
             <span className="xs-door-p">
               A retro desktop I built, running in this tab. Its terminal executes
-              <code> kedge_core::classify</code> — real Rust, compiled to
+              <code> kedge_core::classify</code>, real Rust, compiled to
               WebAssembly, not a mock.
             </span>
             <div className="xs-door-term" aria-hidden="true">

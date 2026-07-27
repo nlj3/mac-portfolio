@@ -13,7 +13,7 @@ export default function Blog() {
           Design notes, not <em>project cards</em>.
         </>
       }
-      lede="How something works and why it was built that way. These are arguments — anything with a number in it lives under Work, where every figure has to regenerate from a command."
+      lede="How something works and why it was built that way. These are arguments. Anything with a number in it lives under Work, where every figure has to regenerate from a command."
     >
       <ul className="pg-index">
         {POSTS.map((p) => {

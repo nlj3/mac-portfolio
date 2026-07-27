@@ -66,7 +66,7 @@ export default function Browser() {
             ) : (
               <>
                 <p className="dir-sub">
-                  Type any of these into the bar above — you'll get my version.
+                  Type any of these into the bar above and you'll get my version.
                 </p>
                 <div className="dir-grid">
                   {directory.map((s) => (

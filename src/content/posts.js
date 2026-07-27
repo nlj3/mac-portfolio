@@ -1,12 +1,12 @@
 // ═══════════════════════════════════════════════════════════════════
-//  WRITING — design notes.
+//  WRITING: design notes.
 //
 //  These explain how something works and why it was built that way. They are
 //  arguments, not measurements: a post here makes no claim that needs a
 //  command to back it.
 //
 //  Anything with a NUMBER in it belongs in `projects.js` as a finding, where
-//  the house rule applies — every stat regenerable from a command, and a kill
+//  the house rule applies: every stat regenerable from a command, and a kill
 //  criterion written before the measurement. Keeping the two apart is what
 //  stops an essay quietly becoming evidence.
 //

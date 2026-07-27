@@ -71,7 +71,7 @@ export default function Project() {
               {project.branch && (
                 <>
                   {' '}
-                  — branch <code>{project.branch}</code>
+                  , on branch <code>{project.branch}</code>
                 </>
               )}
               .
@@ -87,7 +87,7 @@ export default function Project() {
       ) : (
         <section className="pg-section">
           <p className="pg-empty">
-            No measured results published for this one yet — it shipped before the findings format
+            No measured results published for this one yet. It shipped before the findings format
             existed. Saying so beats back-filling numbers that were never recorded at the time.
           </p>
         </section>

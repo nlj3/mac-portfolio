@@ -7,7 +7,7 @@ import { playSound } from '../sound.js'
 // résumé in the first three seconds. Shows once per browser session; any click
 // or key skips straight to the desktop. Honours prefers-reduced-motion.
 const POST = [
-  { label: 'nlj OS 8.1 — power-on self test', head: true },
+  { label: 'nlj OS 8.1 · power-on self test', head: true },
   { label: 'CPU ........ high-velocity solo engineer', ok: true },
   { label: 'Memory ..... ∞', ok: true },
   { label: 'mount  /rust_core', ok: true },

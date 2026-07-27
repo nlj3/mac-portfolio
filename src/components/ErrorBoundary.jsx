@@ -37,7 +37,7 @@ export default class ErrorBoundary extends Component {
       <div className="os-crash">
         <div className="os-crash-box">
           <div className="os-crash-bomb">💣</div>
-          <h2>Sorry — something went wrong.</h2>
+          <h2>Sorry, something went wrong.</h2>
           <p>The desktop ran into an unexpected error.</p>
           <button className="btn" onClick={() => window.location.reload()}>
             Restart
