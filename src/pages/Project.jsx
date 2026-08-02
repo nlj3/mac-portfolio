@@ -46,6 +46,10 @@ export default function Project() {
               Live site ↗
             </a>
           )}
+          {/* A project anyone can install is a different claim from one they can
+              only read about, so it goes in the meta row rather than buried in
+              prose. */}
+          {project.install && <code className="pg-install">{project.install}</code>}
         </>
       }
     >

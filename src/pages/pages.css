@@ -240,3 +240,15 @@
   .pg-crate-list li { grid-template-columns: 1fr; gap: var(--s-1); }
   .pg-crate-n { flex-direction: row; align-items: center; gap: var(--s-2); }
 }
+
+/* Install command in a project's meta row. Monospace and boxed so it reads as
+   something to copy, not as another label. */
+.pg-install {
+  font-family: var(--mono);
+  font-size: var(--t-sm);
+  color: var(--fg);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 1px 7px;
+}

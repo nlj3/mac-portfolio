@@ -129,10 +129,22 @@ export const PROJECTS = [
     name: 'Foreguard',
     kicker: 'Rust · agent security',
     tagline: 'Preview what your AI agent is about to do, before it does it.',
-    lede: 'A dry-run trust layer for MCP agents. Point it at the tool calls an agent wants to make and it produces a plan: which calls are read-only, and which would mutate your files, APIs or data, flagged, previewed, and not executed.',
+    lede: 'A dry-run trust layer for MCP agents. It sits between any MCP host and its tool server: read-only calls run for real, mutating ones are intercepted, previewed with their concrete effect, and executed only if a human says so.',
     status: 'shipped',
     repo: 'https://github.com/nlj3/foreguard',
-    stack: ['Rust', 'MCP stdio proxy', 'BUSL-1.1'],
+    install: 'cargo install foreguard',
+    stack: ['Rust', 'MCP stdio proxy', 'crates.io', 'BUSL-1.1'],
+    // Only what is in the published 0.7.0. Policy authorization, spend metering
+    // and the fleet control plane exist on a branch and are deliberately absent
+    // here: someone who reads this page and runs `cargo install foreguard` must
+    // get what it describes.
+    highlights: [
+      'Sits between any MCP host (Claude Code, Cursor, Cline) and its tool server. No agent changes, no prompt changes.',
+      'Previews the concrete effect, not the JSON: “deletes /etc/passwd”, “sends to attacker@evil.com”, and a real before/after diff for file writes.',
+      'Approval happens on a local page, because a GUI host has no terminal to prompt on. Loopback-only, 256-bit token, Host checked against rebinding, and every failure path resolves to deny.',
+      'Tracks provenance: when data from a web fetch or inbox reaches a mutating call, that Rule-of-Two violation forces approval even without --approve.',
+      'Every decision lands in an append-only JSONL ledger you can replay later against a live server.',
+    ],
     // These are the same measurement as the `ecosystem-validation` finding
     // below and must move with it. They did not: the finding was corrected to
     // the measured 81.0% while this block still read 84.6%, which is the
