@@ -1,12 +1,11 @@
 # Noel Jackson — a portfolio built as a working Macintosh
 
 [![CI](https://github.com/nlj3/mac-portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/nlj3/mac-portfolio/actions/workflows/ci.yml)
-&nbsp;[![Built AI-native](https://img.shields.io/badge/built-AI--native-1f6feb)](AI_SPEC.md)
 &nbsp;[![Live: nlj.dev](https://img.shields.io/badge/live-nlj.dev-2ea043)](https://nlj.dev)
 
 **Live:** [nlj.dev](https://nlj.dev)
 
-**Stack:** React 18 · Vite · Zustand · Zod · three.js + cannon-es · Cloudflare Workers · Web Audio — built **AI-native**, directed with Claude Code. See [AI_SPEC.md](AI_SPEC.md).
+**Stack:** React 18 · Vite · Zustand · Zod · three.js + cannon-es · Cloudflare Workers · Web Audio
 
 A personal portfolio disguised as a fully working **classic Mac OS 8 "Platinum"
 desktop** — draggable windows, a live menu bar, system sounds, theme "flavors",
@@ -203,32 +202,13 @@ stayed red for twelve pushes without anyone noticing.
 
 ---
 
-## AI-Native development
+## How it was built
 
-This desktop was built with an **AI-native workflow** — I direct an AI coding
-agent (Claude Code) as a pair programmer, and I own the architecture, the product
-calls, and the final review. AI is a tool in the loop, not the author of record;
-the point is that a single developer can direct it to build and *maintain* a
-surface this wide without the quality dropping off. Where it was used:
-
-- **Architecture & scaffolding.** I define the contracts — the manifest schema,
-  the window-manager store's shape — and the agent builds components against them.
-  I review, refactor, and throw work away when it's wrong.
-- **Feature loops.** Work happens in tight cycles: I state intent, the agent
-  drafts, I test and correct. The pluggable manifest exists specifically so those
-  loops stay small and safe.
-- **Asset generation, art-directed.** The pixel-art sprites (the Tamachu
-  life-cycle, game art) and UI copy are AI-generated to my direction, then
-  hand-tuned — not shipped raw.
-- **Visual QA in the loop.** Changes are verified in a headless browser
-  (screenshots, DOM and console checks, mobile viewport) before they land, so the
-  UI is checked every change rather than eyeballed once.
-
-The retro shell is deliberate cover for a serious idea: treat the portfolio as a
-platform, and use AI to keep a broad, playful surface actually shippable and
-maintained by one person.
-
----
+I use AI coding tools the way I'd use any other tool in the loop. I set the
+contracts — the manifest schema, the window-manager store's shape, the trust
+boundaries — review every diff, and throw work away when it's wrong. CI runs
+lint, typecheck and build on every push, and a pre-push hook runs the two of
+those that `vite build` does not.
 
 ## License
 

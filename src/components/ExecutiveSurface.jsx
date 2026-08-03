@@ -74,7 +74,7 @@ export default function ExecutiveSurface() {
           <div className="xs-hero-grid">
             <div className="xs-hero-copy">
               <div className="xs-eyebrow">
-                <span className="xs-avail" />Available for Staff &amp; Principal roles
+                <span className="xs-avail" />Open to senior and founding infrastructure roles
               </div>
               <h1 className="xs-h1">
                 Noel Jackson <span className="xs-h1-iii">III</span>
